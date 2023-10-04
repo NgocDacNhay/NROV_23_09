@@ -27,6 +27,15 @@ public class ItemService {
         return i;
     }
     
+    public int buffParamThanLinh(int paramGoc){
+        int dameThem = paramGoc/100;
+            paramGoc = paramGoc + Util.nextInt(0, 15)*dameThem;
+        
+        return paramGoc;
+    }
+
+
+
     public short getItemIdByIcon(short IconID) {
         for (int i = 0; i < Manager.ITEM_TEMPLATES.size(); i++) {
             if (Manager.ITEM_TEMPLATES.get(i).iconID == IconID) {
@@ -1013,20 +1022,63 @@ public class ItemService {
         List<Integer> gang = Arrays.asList(657, 659, 661);
         List<Integer> giay = Arrays.asList(658, 660, 662);
         int nhd = 656;
-        if (ao.contains(itemId)) {
-            it.itemOptions.add(new Item.ItemOption(47, Util.highlightsItem(gender == 2, new Random().nextInt(1001) + 1800))); // áo từ 1800-2800 giáp
+    //    if (ao.contains(itemId)) {
+    //        it.itemOptions.add(new Item.ItemOption(47, Util.highlightsItem(gender == 2, new Random().nextInt(1001) + 1800))); // áo từ 1800-2800 giáp
+    //    }
+    //    if (quan.contains(itemId)) {
+    //        it.itemOptions.add(new Item.ItemOption(22, Util.highlightsItem(gender == 0, new Random().nextInt(16) + 85))); // hp 85-100k
+    //    }
+    //    if (gang.contains(itemId)) {
+    //        it.itemOptions.add(new Item.ItemOption(0, Util.highlightsItem(gender == 2, new Random().nextInt(1500) + 8500))); // 8500-10000
+    //    }
+    //    if (giay.contains(itemId)) {
+    //        it.itemOptions.add(new Item.ItemOption(23, Util.highlightsItem(gender == 1, new Random().nextInt(11) + 80))); // ki 80-90k
+    //    }
+    //    if (nhd == itemId) {
+    //        it.itemOptions.add(new Item.ItemOption(14, new Random().nextInt(3) + 17)); //chí mạng 17-19%
+    //    }
+        // trai dat
+        if(itemId == 650){
+            it.itemOptions.add(new Item.ItemOption(47, buffParamThanLinh(1600))); // áo
         }
-        if (quan.contains(itemId)) {
-            it.itemOptions.add(new Item.ItemOption(22, Util.highlightsItem(gender == 0, new Random().nextInt(16) + 85))); // hp 85-100k
+        if(itemId == 651){
+            it.itemOptions.add(new Item.ItemOption(22, buffParamThanLinh(104000))); // hp
         }
-        if (gang.contains(itemId)) {
-            it.itemOptions.add(new Item.ItemOption(0, Util.highlightsItem(gender == 2, new Random().nextInt(1500) + 8500))); // 8500-10000
+        if(itemId == 657){
+            it.itemOptions.add(new Item.ItemOption(0, buffParamThanLinh(8800))); // dame
         }
-        if (giay.contains(itemId)) {
-            it.itemOptions.add(new Item.ItemOption(23, Util.highlightsItem(gender == 1, new Random().nextInt(11) + 80))); // ki 80-90k
+        if(itemId == 658){
+           it.itemOptions.add(new Item.ItemOption(23, buffParamThanLinh(96000))); // ki
         }
-        if (nhd == itemId) {
-            it.itemOptions.add(new Item.ItemOption(14, new Random().nextInt(3) + 17)); //chí mạng 17-19%
+        // namec
+        if(itemId == 652){
+            it.itemOptions.add(new Item.ItemOption(47, buffParamThanLinh(1700))); // áo
+        }
+        if(itemId == 653){
+            it.itemOptions.add(new Item.ItemOption(22, buffParamThanLinh(100000))); // hp
+        }
+        if(itemId == 659){
+            it.itemOptions.add(new Item.ItemOption(0, buffParamThanLinh(8600))); // dame
+        }
+        if(itemId == 650){
+           it.itemOptions.add(new Item.ItemOption(23, buffParamThanLinh(100000))); // ki
+        }
+        // xayda
+        if(itemId == 654){
+            it.itemOptions.add(new Item.ItemOption(47, buffParamThanLinh(1800))); // áo
+        }
+        if(itemId == 655){
+            it.itemOptions.add(new Item.ItemOption(22, buffParamThanLinh(96000))); // hp
+        }
+        if(itemId == 651){
+            it.itemOptions.add(new Item.ItemOption(0, buffParamThanLinh(9000))); // dame
+        }
+        if(itemId == 652){
+           it.itemOptions.add(new Item.ItemOption(23, buffParamThanLinh(92000))); // ki
+        }
+
+        if(itemId == 656){
+           it.itemOptions.add(new Item.ItemOption(14, new Random().nextInt(3) + 17)); //chí mạng 17-19%
         }
         it.itemOptions.add(new Item.ItemOption(21, 80));// yêu cầu sm 80 tỉ
         it.itemOptions.add(new Item.ItemOption(30, 1));// ko the gd

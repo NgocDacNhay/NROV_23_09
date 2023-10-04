@@ -1,5 +1,8 @@
 package com.girlkun.services.func;
 
+import com.girlkun.card.Card;
+import com.girlkun.card.RadarCard;
+import com.girlkun.card.RadarService;
 import com.girlkun.consts.ConstMap;
 import com.girlkun.models.item.Item;
 import com.girlkun.consts.ConstNpc;
@@ -207,6 +210,9 @@ public class UseItem {
                 case 11: //item bag
                     InventoryServiceNew.gI().itemBagToBody(pl, indexBag);
                     Service.getInstance().sendFlagBag(pl);
+                    break;
+                case 33:
+                    UseCard(pl, item);
                     break;
                 case 75: 
                     InventoryServiceNew.gI().itemBagToBody(pl, indexBag);
@@ -1282,6 +1288,53 @@ public class UseItem {
 
     private void Hopts(Player pl, Item item) {//hop qua do huy diet
         NpcService.gI().createMenuConMeo(pl, item.template.id, -1, "Chọn hành tinh của mày đi", "Set trái đất", "Set namec", "Set xayda", "Từ chổi");
+    }
+
+    public void UseCard(Player pl, Item item) {
+        RadarCard radarTemplate = RadarService.gI().RADAR_TEMPLATE.stream().filter(c -> c.Id == item.template.id).findFirst().orElse(null);
+        if (radarTemplate == null) {
+            return;
+        }
+        if (radarTemplate.Require != -1) {
+            RadarCard radarRequireTemplate = RadarService.gI().RADAR_TEMPLATE.stream().filter(r -> r.Id == radarTemplate.Require).findFirst().orElse(null);
+            if (radarRequireTemplate == null) {
+                return;
+            }
+            Card cardRequire = pl.Cards.stream().filter(r -> r.Id == radarRequireTemplate.Id).findFirst().orElse(null);
+            if (cardRequire == null || cardRequire.Level < radarTemplate.RequireLevel) {
+                Service.gI().sendThongBao(pl, "Bạn cần sưu tầm " + radarRequireTemplate.Name + " ở cấp độ " + radarTemplate.RequireLevel + " mới có thể sử dụng thẻ này");
+                return;
+            }
+        }
+        Card card = pl.Cards.stream().filter(r -> r.Id == item.template.id).findFirst().orElse(null);
+        if (card == null) {
+            Card newCard = new Card(item.template.id, (byte) 1, radarTemplate.Max, (byte) -1, radarTemplate.Options);
+            if (pl.Cards.add(newCard)) {
+                RadarService.gI().RadarSetAmount(pl, newCard.Id, newCard.Amount, newCard.MaxAmount);
+                RadarService.gI().RadarSetLevel(pl, newCard.Id, newCard.Level);
+                InventoryServiceNew.gI().subQuantityItemsBag(pl, item, 1);
+                InventoryServiceNew.gI().sendItemBags(pl);
+            }
+        } else {
+            if (card.Level >= 2) {
+                Service.gI().sendThongBao(pl, "Thẻ này đã đạt cấp tối đa");
+                return;
+            }
+            card.Amount++;
+            if (card.Amount >= card.MaxAmount) {
+                card.Amount = 0;
+                if (card.Level == -1) {
+                    card.Level = 1;
+                } else {
+                    card.Level++;
+                }
+                Service.gI().point(pl);
+            }
+            RadarService.gI().RadarSetAmount(pl, card.Id, card.Amount, card.MaxAmount);
+            RadarService.gI().RadarSetLevel(pl, card.Id, card.Level);
+            InventoryServiceNew.gI().subQuantityItemsBag(pl, item, 1);
+            InventoryServiceNew.gI().sendItemBags(pl);
+        }
     }
 
 }

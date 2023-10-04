@@ -1,5 +1,7 @@
 package com.girlkun.models.player;
 
+import com.girlkun.card.Card;
+import com.girlkun.card.OptionCard;
 import com.girlkun.consts.ConstPlayer;
 import com.girlkun.consts.ConstRatio;
 import com.girlkun.models.intrinsic.Intrinsic;
@@ -19,6 +21,7 @@ import com.girlkun.utils.Util;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class NPoint {
 
@@ -38,6 +41,8 @@ public class NPoint {
         this.tlDameCrit = new ArrayList<>();
     }
 
+    public boolean isCongSDTuCaiTrangXungQuanh = false;
+    public long CongSDTuCaiTrangXungQuanh;
     public boolean isCrit;
     public boolean isCrit100;
 
@@ -69,7 +74,7 @@ public class NPoint {
      */
     public int hpAdd, mpAdd, dameAdd, defAdd, critAdd, hpHoiAdd, mpHoiAdd;
 
-    public int tlSDCaiDep;
+
 
     /**
      * //+#% sức đánh chí mạng
@@ -311,7 +316,7 @@ public class NPoint {
                         case 116: //Kháng thái dương hạ san
                             break;
                         case 117: //Đẹp +#% SĐ cho mình và người xung quanh
-                            this.tlSDDep.add(io.param);
+                            this.tlSDDep.add(io.param); 
                             break;
                         case 147: //+#% sức đánh
                             this.tlDame.add(io.param);
@@ -452,9 +457,162 @@ public class NPoint {
                 }
             }
         }
+    //    Card card = player.Cards.stream().filter(r -> r != null && r.Used == 1).findFirst().orElse(null);
+        List<Card> cards = player.Cards.stream().filter(r -> r != null && r.Used == 1).limit(5).collect(Collectors.toList());
+        for(Card card : cards){
+            if (card != null) {
+            for (OptionCard io : card.Options) {
+                if (io.active == card.Level || (card.Level == -1 && io.active == 0)) {
+                    switch (io.id) {
+                        case 0: //Tấn công +#
+                            this.dameAdd += io.param;
+                            break;
+                        case 2: //HP, KI+#000
+                            this.hpAdd += io.param * 1000;
+                            this.mpAdd += io.param * 1000;
+                            break;
+                        case 3:// fake
+                            this.voHieuChuong += io.param;
+                            break;
+                        case 5: //+#% sức đánh chí mạng
+                            this.tlDameCrit.add(io.param);
+                            break;
+                        case 6: //HP+#
+                            this.hpAdd += io.param;
+                            break;
+                        case 7: //KI+#
+                            this.mpAdd += io.param;
+                            break;
+                        case 8: //Hút #% HP, KI xung quanh mỗi 5 giây
+                            this.tlHutHpMpXQ += io.param;
+                            break;
+                        case 14: //Chí mạng+#%
+                            this.critAdd += io.param;
+                            break;
+                        case 19: //Tấn công+#% khi đánh quái
+                            this.tlDameAttMob.add(io.param);
+                            break;
+                        case 22: //HP+#K
+                            this.hpAdd += io.param * 1000;
+                            break;
+                        case 23: //MP+#K
+                            this.mpAdd += io.param * 1000;
+                            break;
+                        case 27: //+# HP/30s
+                            this.hpHoiAdd += io.param;
+                            break;
+                        case 28: //+# KI/30s
+                            this.mpHoiAdd += io.param;
+                            break;
+                        case 33: //dịch chuyển tức thời
+                            this.teleport = true;
+                            break;
+                        case 47: //Giáp+#
+                            this.defAdd += io.param;
+                            break;
+                        case 48: //HP/KI+#
+                            this.hpAdd += io.param;
+                            this.mpAdd += io.param;
+                            break;
+                        case 49: //Tấn công+#%
+                        case 50: //Sức đánh+#%
+                            this.tlDame.add(io.param);
+                            break;
+                        case 77: //HP+#%
+                            this.tlHp.add(io.param);
+                            break;
+                        case 80: //HP+#%/30s
+                            this.tlHpHoi += io.param;
+                            break;
+                        case 81: //MP+#%/30s
+                            this.tlMpHoi += io.param;
+                            break;
+                        case 88: //Cộng #% exp khi đánh quái
+                            this.tlTNSM.add(io.param);
+                            break;
+                        case 94: //Giáp #%
+                            this.tlDef.add(io.param);
+                            break;
+                        case 95: //Biến #% tấn công thành HP
+                            this.tlHutHp += io.param;
+                            break;
+                        case 96: //Biến #% tấn công thành MP
+                            this.tlHutMp += io.param;
+                            break;
+                        case 97: //Phản #% sát thương
+                            this.tlPST += io.param;
+                            break;
+                        case 100: //+#% vàng từ quái
+                            this.tlGold += io.param;
+                            break;
+                        case 101: //+#% TN,SM
+                            this.tlTNSM.add(io.param);
+                            break;
+                        case 103: //KI +#%
+                            this.tlMp.add(io.param);
+                            break;
+                        case 104: //Biến #% tấn công quái thành HP
+                            this.tlHutHpMob += io.param;
+                            break;
+                        case 147: //+#% sức đánh
+                            this.tlDame.add(io.param);
+                            break;
+                        case 213: //HP+#%
+                                this.tlHp.add(io.param);
+                                this.tlMp.add(io.param);
+                                this.tlDame.add(io.param);
+                                break;
+                    }
+                }
+            }
+        }
+        }
+        
         
         setDameTrainArmor();
         setBasePoint();
+    }
+
+    
+    private void setPointWhenWearClothes1() {
+        
+        
+        int kk=0;
+        int kk1 = 0;
+        List<Player> players = new ArrayList<>();
+
+            try {
+                for (Player pl : player.zone.getNotBosses()) {
+                    if (!player.equals(pl) && pl.setClothes.ctHaiTac != -1 && Util.getDistance(player, pl) <= 300) {
+                        
+                        players.add(pl);
+                    }
+                }
+            } catch (Exception e) {
+            }
+            for (Item item : player.inventory.itemsBody) {
+                    if (item.isNotNullItem()) {
+                        
+                        for (Item.ItemOption io : item.itemOptions) {
+                            if (io.optionTemplate.id == 117) {
+                                
+                                    kk = 1;
+                                    kk1 = io.param;
+                                    break;
+                            
+                                            
+                            } else{
+                                kk = 0;
+                                kk1 = 0;
+                            }
+                        }
+                    }
+                }
+            if(kk == 1){
+                for (Player pl : players) {
+                    pl.nPoint.tlSDDep.add(kk1);
+                }
+            }
     }
 
     private void setDameTrainArmor() {
@@ -497,6 +655,7 @@ public class NPoint {
         setHpHoi();
         setMpHoi();
         setNeDon();
+
     }
 
     private void setNeDon() {
@@ -516,13 +675,14 @@ public class NPoint {
         this.mpHoi += ((long) this.mpMax * this.tlMpHoi / 100);
         this.mpHoi += ((long) this.mpMax * this.tlMpHoiBanThanVaDongDoi / 100);
     }
-
+    public long hpChuan;
     private void setHpMax() {
         this.hpMax = this.hpg;
         this.hpMax += this.hpAdd;
+        hpChuan = this.hpMax;
         //đồ
         for (Integer tl : this.tlHp) {
-            this.hpMax += ((long) this.hpMax * tl / 100);
+            this.hpMax += ((long) this.hpChuan * tl / 100);
         }
         //set nappa
         if (this.player.setClothes.nappa == 5) {
@@ -666,13 +826,14 @@ public class NPoint {
             this.hp = this.hpMax;
         }
     }
-
+    public long mpChuan;
     private void setMpMax() {
         this.mpMax = this.mpg;
         this.mpMax += this.mpAdd;
+        mpChuan = this.mpMax;
         //đồ
         for (Integer tl : this.tlMp) {
-            this.mpMax += (this.mpMax * tl / 100);
+            this.mpMax += (this.mpChuan * tl / 100);
         }
         if (this.player.setClothes.picolo == 5) {
             this.mpMax *= 3;
@@ -778,16 +939,17 @@ public class NPoint {
             this.mp = this.mpMax;
         }
     }
-
+    public long dameChuan;
     private void setDame() {
         this.dame = this.dameg;
         this.dame += this.dameAdd;
+        dameChuan = this.dame;
         //đồ
         for (Integer tl : this.tlDame) {
-            this.dame += ((long) this.dame * tl / 100);
+            this.dame += ((long) this.dameChuan * tl / 100);
         }
         for (Integer tl : this.tlSDDep) {
-            this.dame += ((long) this.dame * tl / 100);
+            this.dame += ((long) this.dameChuan * tl / 100);
         }
         //pet mabư
         if (this.player.isPet && ((Pet) this.player).typePet == 1
@@ -964,13 +1126,13 @@ public class NPoint {
         this.tlSDDep.clear();
         this.tlSubSD = 0;
         this.tlHpGiamODo = 0;
-        this.tlSDCaiDep = 0;
         this.teleport = false;
 
         this.wearingVoHinh = false;
         this.wearCaiDep = false;
         this.isKhongLanh = false;
         this.khangTDHS = false;
+
     }
 
     public void addHp(long hp) {
@@ -1267,25 +1429,35 @@ public class NPoint {
     }
 
     public long calSubTNSM(long tiemNang) {
-        if (power >= 100000000000L) {
+        if (power >= 1000000000L) {
             tiemNang /= 2;
-        }else if (power >= 150000000000L) {
+        }else if (power >= 500000000L) {
+            tiemNang /= 3;
+        }else if (power >= 10000000000L) {
             tiemNang /= 4;
-        } else if (power >= 180000000000L) {
+        }else if (power >= 20000000000L) {
+            tiemNang /= 5;
+        }else if (power >= 30000000000L) {
+            tiemNang /= 6;
+        }else if (power >= 40000000000L) {
+            tiemNang /= 7;
+        }else if (power >= 50000000000L) {
             tiemNang /= 8;
-        } else if (power >= 200000000000L) {
+        }else if (power >= 80000000000L) {
+            tiemNang /= 9;
+        } else if (power >= 100000000000L) {
+            tiemNang /= 10;
+        } else if (power >= 150000000000L) {
             tiemNang /= 12;
-//            tiemNang -= ((long) tiemNang * 95 / 100);
         } else if (power >= 300000000000L) {
             tiemNang /= 15;
-//            tiemNang -= ((long) tiemNang * 90 / 100);
         }
         else if (power >= 500000000000L) {
-            tiemNang /= 20;}
-        else if (power >= 600000000000L) {
             tiemNang /= 30;}
-        else if (power >= 800000000000L) {
+        else if (power >= 600000000000L) {
             tiemNang /= 40;}
+        else if (power >= 800000000000L) {
+            tiemNang /= 50;}
          else if (power >= 1000000000000L) {
             tiemNang /= 80;}
          else if (power >= 2000000000000L) {
@@ -1901,7 +2073,6 @@ public class NPoint {
         //hồi phục 30s
         //hồi phục thể lực
     }
-
     public void dispose() {
         this.intrinsic = null;
         this.player = null;

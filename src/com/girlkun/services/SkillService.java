@@ -110,7 +110,9 @@ public class SkillService {
             player.skillSpecial.setSkillSpecial(dir, dx, dy, x, y);
         }
         catch (Exception e) {
+
         }
+
     }
     public void updateSkillSpecial(Player player) {
         try {
@@ -1296,17 +1298,6 @@ public class SkillService {
                     case Skill.LIEN_HOAN:
                     case Skill.GALICK:
                     case Skill.ANTOMIC:
-                        switch (skill.template.id) {
-                            case Skill.DRAGON:
-                            case Skill.KAMEJOKO:
-                            case Skill.DEMON:
-                            case Skill.MASENKO:
-                            case Skill.LIEN_HOAN:
-                            case Skill.GALICK:
-                            case Skill.ANTOMIC:
-//                                skill.lastTimeUseThisSkill = System.currentTimeMillis() + (skill.coolDown / 100);
-                                break;
-                        }
                         break;
                 }
                 break;

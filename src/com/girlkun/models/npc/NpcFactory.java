@@ -11,6 +11,7 @@ import com.girlkun.consts.ConstPlayer;
 import com.girlkun.consts.ConstTask;
 import com.girlkun.database.GirlkunDB;
 import com.girlkun.jdbc.daos.PlayerDAO;
+import com.girlkun.kygui.ShopKyGuiService;
 import com.girlkun.models.boss.Boss;
 import com.girlkun.models.boss.BossData;
 import com.girlkun.models.boss.BossID;
@@ -3140,7 +3141,7 @@ public static Npc docNhan(int mapId, int status, int cx, int cy, int tempId, int
                 if (canOpenNpc(player)) {
                     createOtherMenu(player, ConstNpc.BASE_MENU,
                             "Xin chào, ta có một số vật phẩm đặt biệt cậu có muốn xem không?",
-                            "Cửa hàng", "Shop\nThử Đồ");
+                            "Cửa hàng", "Shop\nThử Đồ","Sự kiện","Hớt tóc");
                 }
             }
 
@@ -3156,18 +3157,18 @@ public static Npc docNhan(int mapId, int status, int cx, int cy, int tempId, int
                                 case 1: //tiệm hồng ngọc
                                     ShopServiceNew.gI().opendShop(player, "SANTA_RUBY", false);
                                     break;
-//                                case 2:
-////                                    if (player.getSession().actived) {
-//                                    ShopServiceNew.gI().opendShop(player, "SANTA_EVENT", false);
-////                                    } 
-////                                    else {
-////                                        Service.getInstance().sendThongBao(player, "Vui lòng kích hoạt tài khoản để sử dụng chức năng này");
-////                                    }
-//                                    break;
+                                case 2:
+                            //        if (player.getSession().actived) {
+                                    ShopServiceNew.gI().opendShop(player, "SANTA_EVENT", false);
+                            //        } 
+                            //        else {
+                            //            Service.getInstance().sendThongBao(player, "Vui lòng kích hoạt tài khoản để sử dụng chức năng này");
+                            //        }
+                                    break;
 
-//                                case 2: //tiệm hớt tóc
-//                                    ShopServiceNew.gI().opendShop(player, "SANTA_HEAD", false);
-//                                    break;
+                                case 3: //tiệm hớt tóc
+                                    ShopServiceNew.gI().opendShop(player, "SANTA_HEAD", false);
+                                    break;
                             }
                         }
                     }
@@ -3202,7 +3203,7 @@ public static Npc docNhan(int mapId, int status, int cx, int cy, int tempId, int
                     if (this.mapId == 5) {
                         this.createOtherMenu(player, ConstNpc.BASE_MENU,
                                 "Ngươi tìm ta có việc gì?",
-                                "Ép sao\ntrang bị", "Pha lê\nhóa\ntrang bị","Pha lê\nhoá\ntrang bị\n100 lần", "Pháp Sư Hoá\nTrang Bị", "Tẩy Pháp Sư", "Ấn trang\nbị","Đổi Đá\nNgũ Sắc","Ép SKH\n Trang Bị","Tiến Hóa\n Cải Trang\n","Nâng cấp\nNgọc Bội","Nâng cấp\nTrang Bị");
+                                "Ép sao\ntrang bị", "Pha lê\nhóa\ntrang bị", "Pháp Sư Hoá\nTrang Bị", "Tẩy Pháp Sư", "Ấn trang\nbị","Đổi Đá\nNgũ Sắc","Ép SKH\n Trang Bị","Tiến Hóa\n Cải Trang\n","Nâng cấp\nNgọc Bội","Nâng cấp\nTrang Bị");
                     } else if (this.mapId == 121) {
                         this.createOtherMenu(player, ConstNpc.BASE_MENU,
                                 "Ngươi tìm ta có việc gì?",
@@ -3232,37 +3233,34 @@ public static Npc docNhan(int mapId, int status, int cx, int cy, int tempId, int
                                     CombineServiceNew.gI().openTabCombine(player, CombineServiceNew.PHA_LE_HOA_TRANG_BI);
                                     break;
                                 case 2:
-                                    CombineServiceNew.gI().openTabCombine(player, CombineServiceNew.PHA_LE_HOA_TRANG_BI_100_LAN);
-                                    break;
-                                case 3:
                                     CombineServiceNew.gI().openTabCombine(player, CombineServiceNew.PS_HOA_TRANG_BI);
                                     break;
-                                case 4:
+                                case 3:
                                     CombineServiceNew.gI().openTabCombine(player, CombineServiceNew.TAY_PS_HOA_TRANG_BI);
                                     break;
-                                case 5:
+                                case 4:
                                     CombineServiceNew.gI().openTabCombine(player, CombineServiceNew.AN_TRANG_BI);
                                     break;
-                                case 6:
+                                case 5:
                                     CombineServiceNew.gI().openTabCombine(player, CombineServiceNew.DOI_SKH_THANH_DNS );
                                     break;
-                                case 7:
+                                case 6:
                                     createOtherMenu(player, ConstNpc.MENU_EP_SKH,
                                             "Ngươi muốn Ép SKH cho loại trang bị nào hãy chọn bên dưới!",
                                             "Trang Bị\nThần", "Trang Bị\nHủy Diệt", "Trang Bị\nThiên Sứ", "Tẩy SKH\nTrang Bị", "Đóng");
                                     break;
-                                case 8:
+                                case 7:
                                     createOtherMenu(player, ConstNpc.MENU_CAI_TRANG,
                                             "Ngươi muốn Tiến Hóa Cải Trang nào hãy chọn bên dưới!",
                                             "Nâng Cấp\n Cải Trang","Cải Trang V2\nBaby Vegeta", "Cải Trang V3\nBlack Goku","Cải Trang V4\nBill","Cải Trang V5\nHearts Gold", "Đóng");
                                     break;
                                     
-                                case 9:
+                                case 8:
                                     createOtherMenu(player, ConstNpc.MENU_NGOC_BOI,
                                             "Ngươi muốn Điêu Khắc Chỉ Số Đá hay \n Người muốn Điêu Khắc Chỉ Số Ngọc Bội hãy chọn bên dưới!",
                                             "Điêu Khắc\nChỉ Số\nVào Đá", "Điêu Khắc\nChỉ Số\nNgọc Bội","Tiến Hóa\nNgọc Bội", "Đóng");
                                     break;
-                                case 10:
+                                case 9:
                                     createOtherMenu(player, ConstNpc.MENU_TRANG_BI,
                                             "Ngươi muốn Tăng Sức Mạnh Trang Bị hãy chọn bên dưới!",
                                             "Tinh Luyện\n Trang Bị", "Rèn\nTrang Bị", "Đóng");
@@ -3339,7 +3337,6 @@ public static Npc docNhan(int mapId, int status, int cx, int cy, int tempId, int
                             switch (player.combineNew.typeCombine) {
                                 case CombineServiceNew.EP_SAO_TRANG_BI:
                                 case CombineServiceNew.PHA_LE_HOA_TRANG_BI:
-                                case CombineServiceNew.PHA_LE_HOA_TRANG_BI_100_LAN:
                                 case CombineServiceNew.CHUYEN_HOA_TRANG_BI:
                                 case CombineServiceNew.PS_HOA_TRANG_BI:
                                 case CombineServiceNew.AN_TRANG_BI:
@@ -3362,6 +3359,10 @@ public static Npc docNhan(int mapId, int status, int cx, int cy, int tempId, int
                                    
                                     if (select == 0) {
                                         CombineServiceNew.gI().startCombine(player);
+                                    } else if (select == 1) {
+                                        CombineServiceNew.gI().startCombine1(player);
+                                    } else if (select == 2) {
+                                        CombineServiceNew.gI().startCombine2(player);
                                     }
                                     break;
                             }
@@ -3374,7 +3375,7 @@ public static Npc docNhan(int mapId, int status, int cx, int cy, int tempId, int
                                     break;
                             }
                         }
-                    } else if (this.mapId == 42 || this.mapId == 43 || this.mapId == 44) {
+                    } else if (this.mapId == 42 || this.mapId == 43 || this.mapId == 44 || this.mapId == 84) {
                         if (player.iDMark.isBaseMenu()) {
                             switch (select) {
                                 case 0: //shop bùa
@@ -3429,6 +3430,10 @@ public static Npc docNhan(int mapId, int status, int cx, int cy, int tempId, int
                                 case CombineServiceNew.NANG_CAP_SKH_VIP:
                                     if (select == 0) {
                                         CombineServiceNew.gI().startCombine(player);
+                                    } else if (select == 1) {
+                                        CombineServiceNew.gI().startCombine1(player);
+                                    } else if (select == 2) {
+                                        CombineServiceNew.gI().startCombine2(player);
                                     }
                                     break;
                             }
@@ -7285,9 +7290,9 @@ public static Npc docNhan(int mapId, int status, int cx, int cy, int tempId, int
                                         break;
                                     }
                                     if (select == 1) {
-                                        this.npcChat(player, "Chưa biết bán gì?");
-//                                        ShopServiceNew.gI().opendShop(player, "BILL", false);
-//                                        break;
+                                    //    this.npcChat(player, "Chưa biết bán gì?");
+                                        ShopServiceNew.gI().opendShop(player, "BILL", true);
+                                        break;
 
                                     }
                                     if (select == 2) {
@@ -7631,11 +7636,39 @@ public static Npc docNhan(int mapId, int status, int cx, int cy, int tempId, int
         };
     }
 
+    private static Npc kyGui(int mapId, int status, int cx, int cy, int tempId, int avartar) {
+        return new Npc(mapId, status, cx, cy, tempId, avartar) {
+            @Override
+            public void openBaseMenu(Player player) {
+                if (canOpenNpc(player)) {
+                    createOtherMenu(player, 0, "Cửa hàng chúng tôi chuyên mua bán hàng hiệu, hàng độc, cảm ơn bạn đã ghé thăm.", "Hướng\ndẫn\nthêm", "Mua bán\nKý gửi", "Từ chối");
+                }
+            }
+
+            @Override
+            public void confirmMenu(Player pl, int select) {
+                if (canOpenNpc(pl)) {
+                    switch (select) {
+                        case 0:
+                            Service.gI().sendPopUpMultiLine(pl, tempId, avartar, "Cửa hàng chuyên nhận ký gửi mua bán vật phẩm\bChỉ với 5 hồng ngọc\bGiá trị ký gửi 10k-200Tr vàng hoặc 2-2k ngọc\bMột người bán, vạn người mua, mại dô, mại dô");
+                            break;
+                        case 1:
+                            ShopKyGuiService.gI().openShopKyGui(pl);
+                            break;
+
+                    }
+                }
+            }
+        };
+    }
+
 
     public static Npc createNPC(int mapId, int status, int cx, int cy, int tempId) {
         int avatar = Manager.NPC_TEMPLATES.get(tempId).avatar;
         try {
             switch (tempId) {
+                case ConstNpc.CUA_HANG_KY_GUI:
+                    return kyGui(mapId, status, cx, cy, tempId, avatar);
                 case ConstNpc.MR_QUY_LAO_BDKB:
                       return BDKB(mapId, status, cx, cy, tempId, avatar);
                 case ConstNpc.MR_POPO:
@@ -7978,6 +8011,8 @@ public static Npc docNhan(int mapId, int status, int cx, int cy, int tempId, int
                             case 4:
                                 BossManager.gI().showListBoss(player);
                                 break;
+                            case 5:
+                                Input.gI().createFormSenditem1(player);
                         }
                         break;
 

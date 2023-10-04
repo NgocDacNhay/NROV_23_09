@@ -9,6 +9,7 @@ import lombok.Data;
 @Data
 public class IDMark {
 
+    private int idItemUpTop;
     private int typeChangeMap; //capsule, ngọc rồng đen...
     private int indexMenu; //menu npc
     private int typeInput; //input

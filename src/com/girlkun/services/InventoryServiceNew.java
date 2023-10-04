@@ -357,29 +357,17 @@ public class InventoryServiceNew {
                 break;
             case 23:
             case 24:
-                if (!player.isPet){
-                    index = 9;
-                    break;
-                } else {
-                    break;
-                }
+                index = 9;
+                break;
             case 11:
-                if (!player.isPet){
-                    index = 8;
-                    break;
-                } else {
-                    break;
-                }
+                index = 8;
+                break;
             case 72:
-                if (!player.isPet){
-                    index = 10;
-                    break;
-                } else {
-                    break;
-                }
+                index = 10;
+                break;
             case 21:
-                    index = 7;
-                    break;
+                index = 7;
+                break;
         }
         sItem = player.inventory.itemsBody.get(index);
         player.inventory.itemsBody.set(index, item);
@@ -431,7 +419,7 @@ public class InventoryServiceNew {
     public void itemBagToPetBody(Player player, int index) {
         if (player.pet != null && player.pet.nPoint.power >= 1500000) {
             Item item = player.inventory.itemsBag.get(index);
-            if (item.isNotNullItem() && item.isPetCanUse()) {
+            if (item.isNotNullItem() ) {
                 Item itemSwap = putItemBody(player.pet, item);
                 player.inventory.itemsBag.set(index, itemSwap);
                 sendItemBags(player);

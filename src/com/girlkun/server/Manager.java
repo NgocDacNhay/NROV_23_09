@@ -2,10 +2,15 @@ package com.girlkun.server;
 
 import com.girlkun.database.GirlkunDB;
 import com.girlkun.consts.ConstPlayer;
+import com.girlkun.card.OptionCard;
+import com.girlkun.card.RadarCard;
+import com.girlkun.card.RadarService;
 import com.girlkun.consts.ConstMap;
 import com.girlkun.data.DataGame;
 import com.girlkun.jdbc.daos.GodGK;
 import com.girlkun.jdbc.daos.ShopDAO;
+import com.girlkun.kygui.ItemKyGui;
+import com.girlkun.kygui.ShopKyGuiManager;
 import com.girlkun.models.Template.*;
 import com.girlkun.models.clan.Clan;
 import com.girlkun.models.clan.ClanMember;
@@ -744,6 +749,31 @@ public class Manager {
             }
             Logger.success("Load npc template thành công (" + NPC_TEMPLATES.size() + ")\n");
 
+
+            ps = con.prepareStatement("SELECT * FROM shop_ky_gui");
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                int i = rs.getInt("id");
+                int idPl = rs.getInt("player_id");
+                byte tab = rs.getByte("tab");
+                short itemId = rs.getShort("item_id");
+                int gold = rs.getInt("gold");
+                int gem = rs.getInt("gem");
+                int quantity = rs.getInt("quantity");
+                byte isUp = rs.getByte("isUpTop");
+                boolean isBuy = rs.getByte("isBuy") == 1;
+                List<Item.ItemOption> op = new ArrayList<>();
+                JSONArray jsa2 = (JSONArray) JSONValue.parse(rs.getString("itemOption"));
+                for (int j = 0; j < jsa2.size(); ++j) {
+                    JSONObject jso2 = (JSONObject) jsa2.get(j);
+                    int idOptions = Integer.parseInt(jso2.get("id").toString());
+                    int param = Integer.parseInt(jso2.get("param").toString());
+                    op.add(new Item.ItemOption(idOptions, param));
+                }
+                ShopKyGuiManager.gI().listItem.add(new ItemKyGui(i, itemId, idPl, tab, gold, gem, quantity, isUp, op, isBuy));
+            }
+            Logger.log(Logger.PURPLE, "Finish load item ky gui [" + ShopKyGuiManager.gI().listItem.size() + "]!\n");
+
             //load map template
             ps = con.prepareStatement("select count(id) from map_template");
             rs = ps.executeQuery();
@@ -832,7 +862,46 @@ public class Manager {
                 }
                 Logger.success("Load map template thành công (" + MAP_TEMPLATES.length + ")\n");
                 RUBY_REWARDS.add(Util.sendDo(861, 0, new ArrayList<>()));
+
+                ps = con.prepareStatement("select * from radar");
+                rs = ps.executeQuery();
+                while (rs.next()) {
+                    RadarCard rd = new RadarCard();
+                    rd.Id = rs.getShort("id");
+                    rd.IconId = rs.getShort("iconId");
+                    rd.Rank = rs.getByte("rank");
+                    rd.Max = rs.getByte("max");
+                    rd.Type = rs.getByte("type");
+                    rd.Template = rs.getShort("template");
+                    rd.Name = rs.getString("name");
+                    rd.Info = rs.getString("info");
+                    JSONArray arr = (JSONArray) JSONValue.parse(rs.getString("body"));
+                    for (int i1 = 0; i1 < arr.size(); i1++) {
+                        JSONObject ob = (JSONObject) arr.get(i1);
+                        if (ob != null) {
+                            rd.Head = Short.parseShort(String.valueOf(ob.get("head").toString()));
+                            rd.Body = Short.parseShort(String.valueOf(ob.get("body").toString()));
+                            rd.Leg = Short.parseShort(String.valueOf(ob.get("leg").toString()));
+                            rd.Bag = Short.parseShort(String.valueOf(ob.get("bag").toString()));
+                        }
+                    }
+                    rd.Options.clear();
+                    arr = (JSONArray) JSONValue.parse(rs.getString("options"));
+                    for (int i1 = 0; i1 < arr.size(); i1++) {
+                        JSONObject ob = (JSONObject) arr.get(i1);
+                        if (ob != null) {
+                            rd.Options.add(new OptionCard(Integer.parseInt(ob.get("id").toString()), Short.parseShort(ob.get("param").toString()), Byte.parseByte(ob.get("activeCard").toString())));
+                        }
+                    }
+                    rd.Require = rs.getShort("require");
+                    rd.RequireLevel = rs.getShort("require_level");
+                    rd.AuraId = rs.getShort("aura_id");
+                    RadarService.gI().RADAR_TEMPLATE.add(rd);
+                }
+
             }
+            Logger.success("Load radar template thành công (" + RadarService.gI().RADAR_TEMPLATE.size() + ")\n");
+
             topSM = realTop(queryTopSM, con);
             Logger.success("Load top sm thành công (" + topSM.size() + ")\n");
             topNV = realTop(queryTopNV, con);

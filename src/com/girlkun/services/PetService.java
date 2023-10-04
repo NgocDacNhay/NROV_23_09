@@ -365,7 +365,7 @@ public class PetService {
         pet.nPoint.dameg = data[2];
         pet.nPoint.defg = data[3];
         pet.nPoint.critg = data[4];
-        for (int i = 0; i < 7; i++) {
+        for (int i = 0; i < 11; i++) {
             pet.inventory.itemsBody.add(ItemService.gI().createItemNull());
         }
         pet.playerSkill.skills.add(SkillUtil.createSkill(Util.nextInt(0, 2) * 2, 1));

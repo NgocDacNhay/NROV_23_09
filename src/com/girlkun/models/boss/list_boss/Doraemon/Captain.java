@@ -75,7 +75,7 @@ public class Captain extends Boss {
 
         }
         if (!this.isDie()) {
-            if (!piercing && Util.isTrue(this.nPoint.tlNeDon, 100000)) {
+            if (!piercing && Util.isTrue(this.nPoint.tlNeDon/100, 100000)) {
                 this.chat("Xí hụt");
                 return 0;
             }

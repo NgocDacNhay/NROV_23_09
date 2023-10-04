@@ -1667,7 +1667,6 @@ public class BossesData {
             new int[]{120},
             new int[][]{
 //                {Skill.TU_SAT, 7, 100000},
-                {Skill.KHIEN_NANG_LUONG, 7, 50000},
                 {Skill.DE_TRUNG, 7, 10000},
                 {Skill.SOCOLA, 7, 1000},
                 {Skill.DEMON, 7, 1000}},

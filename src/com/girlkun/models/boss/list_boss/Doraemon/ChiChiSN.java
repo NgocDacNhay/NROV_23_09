@@ -87,7 +87,7 @@ public class ChiChiSN extends Boss {
 
         }
         if (!this.isDie()) {
-            if (!piercing && Util.isTrue(this.nPoint.tlNeDon, 100000)) {
+            if (!piercing && Util.isTrue(this.nPoint.tlNeDon/1000, 100000)) {
                 this.chat("Xí hụt");
                 return 0;
             }

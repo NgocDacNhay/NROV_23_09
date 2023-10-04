@@ -369,9 +369,45 @@ public class ShopServiceNew {
      * @param player     người chơi
      * @param itemTempId id template vật phẩm
      */
+
+    public Item thucAn(Player player){
+        boolean duThucAn = true;
+        int khongCoThucAn = 0;
+        Item item1 = InventoryServiceNew.gI().findItemBag(player, 663);
+        Item item2 = InventoryServiceNew.gI().findItemBag(player, 664);
+        Item item3 = InventoryServiceNew.gI().findItemBag(player, 665);
+        Item item4 = InventoryServiceNew.gI().findItemBag(player, 666);
+        Item item5 = InventoryServiceNew.gI().findItemBag(player, 667);
+        Item itemList[] = {item1, item2, item3, item4, item5};
+        for(int i = 0; i < 5; i++){
+            if(itemList[i] != null){
+                if(itemList[i].quantity >= 99){
+                    duThucAn = true;
+                    return itemList[i];
+                } else {
+                    duThucAn = false;
+                }
+
+            } else{
+                khongCoThucAn++;
+            }
+        }
+        if(duThucAn == false){
+            Service.getInstance().sendThongBao(player, "Mang 99 Thức ăn đến cho ta ");
+        }
+        if(khongCoThucAn == 5){
+            Service.getInstance().sendThongBao(player, "Mang Thức ăn đến cho ta ");
+        }
+        return null;
+        
+    }
+
+
     public void buyItem(Player player, int itemTempId) {
         Shop shop = player.iDMark.getShopOpen();
         ItemShop is = shop.getItemShop(itemTempId);
+        
+        
         if (is == null) {
             Service.getInstance().sendThongBao(player, "Không thể thực hiện");
             return;
@@ -389,9 +425,28 @@ public class ShopServiceNew {
                 return;
             }
         }
+        if(shop.id == 11){
+            Item item1 = thucAn(player);
+            if(item1 == null){
+                return;
+            } else if(item1 != null && item1.quantity < 99){
+                return;
+            } else if(item1 != null && item1.quantity >= 99){
+                InventoryServiceNew.gI().subQuantityItemsBag(player, item1, 99);
+                InventoryServiceNew.gI().sendItemBags(player);
+                
+            } 
+        }
         Item item = ItemService.gI().createItemFromItemShop(is);
-        InventoryServiceNew.gI().addItemBag(player, item);
-        InventoryServiceNew.gI().sendItemBags(player);
+        int itemid = item.template.id;
+        if(itemid >= 650 && itemid <= 662){
+            Item itemHuyDiet = ItemService.gI().randomCS_DHD(itemid, player.gender);
+            InventoryServiceNew.gI().addItemBag(player, itemHuyDiet);
+            InventoryServiceNew.gI().sendItemBags(player);
+        } else{
+            InventoryServiceNew.gI().addItemBag(player, item);
+            InventoryServiceNew.gI().sendItemBags(player);
+        }
         Service.getInstance().sendThongBao(player, "Mua thành công " + is.temp.name);
     }
 

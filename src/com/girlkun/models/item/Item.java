@@ -243,7 +243,7 @@ public class Item {
         if (this.template.id >= 1074 && this.template.id <= 1078) {
             return true;
         } else if (this.template.id == -1) {
-    }
+        }
         return false;
     }
     

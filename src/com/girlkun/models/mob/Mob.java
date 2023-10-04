@@ -159,30 +159,49 @@ public class Mob {
 
     public static long smtnDeTu;
 
-    
+    public long levelBdkb(Player pl){
+        long level = 1;
+        if(pl.clan.bdkb.level <= 10){
+            level = 2;
+        } else if(pl.clan.bdkb.level <= 20){
+            level = 3;
+        } else if(pl.clan.bdkb.level <= 30){
+            level = 4;
+        } else if(pl.clan.bdkb.level <= 40){
+            level = 5;
+        } else if(pl.clan.bdkb.level <= 50){
+            level = 6;
+        } else if(pl.clan.bdkb.level <= 60){
+            level = 7;
+        } else if(pl.clan.bdkb.level <= 70){
+            level = 8;
+        } else if(pl.clan.bdkb.level <= 80){
+            level = 9;
+        } else if(pl.clan.bdkb.level <= 90){
+            level = 10;
+        } else if(pl.clan.bdkb.level <= 100){
+            level = 11;
+        } else if(pl.clan.bdkb.level <= 110){
+            level = 15;
+        }
+        return level;
+    }
 
     public long getTiemNangForPlayer(Player pl, double dame) {
         int levelPlayer = Service.getInstance().getCurrLevel(pl);
         int n = levelPlayer - this.level;
-        long pDameHit = 0;
-        if (point.getHpFull() <= 10000){
-            pDameHit = Util.TamkjllGH(dame) /8;
-        } else if(point.getHpFull() <= 100000){
-            pDameHit = Util.TamkjllGH(dame) /3;
-        } else if(point.getHpFull() <= 300000){
-            pDameHit = Util.TamkjllGH(dame);
-        } else if(point.getHpFull() <= 500000){
-            pDameHit = Util.TamkjllGH(dame) * 2;
-        } else if(point.getHpFull() <= 1000000){
-            pDameHit = Util.TamkjllGH(dame) * 3;
-        } else if(point.getHpFull() <= 2000000){
-            pDameHit = Util.TamkjllGH(dame) * 4;
-        } else if(point.getHpFull() <= 5000000){
-            pDameHit = Util.TamkjllGH(dame) * 5;
+        double pDameHit = 0;
+        if(this.zone.map.mapId >= 135 && this.zone.map.mapId <= 138){
+            pDameHit = (double)Util.TamkjllGH(dame) * 200*levelBdkb(pl) / (point.getHpFull()/5);
         }
-        else pDameHit = Util.TamkjllGH(dame) * 10;
+        else if (point.getHpFull() >= 100000000) {
+            pDameHit = (double)Util.TamkjllGH(dame) * 200 / point.getHpFull();
+        } else {
+            pDameHit = (double)Util.TamkjllGH(dame) * 80 / point.getHpFull();
+        }
         
-        long tiemNang = pDameHit;
+        double tn1 = (double)pDameHit * maxTiemNang / 100;
+        long tiemNang = (long)tn1;
 
         if (n >= 0) {
             for (int i = 0; i < n; i++) {
@@ -519,7 +538,7 @@ public class Mob {
         //Roi Do Than Cold
 //        if (!player.isPet && !player.isNewPet && !player.isNewPet1 && player.isBoss){
         if (this.zone.map.mapId >= 105 && this.zone.map.mapId <= 110) {
-            if(Util.isTrue(5, 60000)){
+            if(Util.isTrue(2, 60000)){
                 Item Quanthanlinh = ItemService.gI().createNewItem((short) (556));
                 Quanthanlinh.itemOptions. add(new Item.ItemOption(22, Util.nextInt(55,65)));
                 Quanthanlinh.itemOptions.add(new Item.ItemOption(21, Util.nextInt(15,17)));
@@ -529,7 +548,7 @@ public class Mob {
             }
         }
         if (this.zone.map.mapId >= 105 && this.zone.map.mapId <= 110) {
-            if(Util.isTrue(5, 60000)){
+            if(Util.isTrue(2, 60000)){
                 Item Quanthanlinhxd = ItemService.gI().createNewItem((short) (560));
                 Quanthanlinhxd.itemOptions.add(new Item.ItemOption(22, Util.nextInt(45,55)));
                 Quanthanlinhxd.itemOptions.add(new Item.ItemOption(21, Util.nextInt(15,17)));
@@ -539,7 +558,7 @@ public class Mob {
             }
         }
         if (this.zone.map.mapId >= 105 && this.zone.map.mapId <= 110) {
-            if(Util.isTrue(5, 60000)){
+            if(Util.isTrue(2, 60000)){
                 Item Quanthanlinhnm = ItemService.gI().createNewItem((short) (558));
                 Quanthanlinhnm.itemOptions.add(new Item.ItemOption(22, Util.nextInt(45,60)));
                 Quanthanlinhnm.itemOptions.add(new Item.ItemOption(21, Util.nextInt(15,17)));
@@ -549,7 +568,7 @@ public class Mob {
             }
         }
         if (this.zone.map.mapId >= 105 && this.zone.map.mapId <= 110) {
-            if(Util.isTrue(5, 60000)){
+            if(Util.isTrue(2, 60000)){
                 Item Aothanlinh = ItemService.gI().createNewItem((short) (555));
                 Aothanlinh.itemOptions.add(new Item.ItemOption(47, Util.nextInt(500,600)));
                 Aothanlinh.itemOptions.add(new Item.ItemOption(21, Util.nextInt(15,17)));
@@ -559,7 +578,7 @@ public class Mob {
             }
         }
         if (this.zone.map.mapId >= 105 && this.zone.map.mapId <= 110) {
-            if(Util.isTrue(5, 60000)){
+            if(Util.isTrue(2, 60000)){
                 Item Aothanlinhnm = ItemService.gI().createNewItem((short) (557));
                 Aothanlinhnm.itemOptions.add(new Item.ItemOption(47, Util.nextInt(400,550)));
                 Aothanlinhnm.itemOptions.add(new Item.ItemOption(21, Util.nextInt(15,17)));
@@ -569,7 +588,7 @@ public class Mob {
             }
         }
         if (this.zone.map.mapId >= 105 && this.zone.map.mapId <= 110) {
-            if(Util.isTrue(5, 60000)){
+            if(Util.isTrue(2, 60000)){
                 Item Aothanlinhxd = ItemService.gI().createNewItem((short) (559));
                 Aothanlinhxd.itemOptions.add(new Item.ItemOption(47, Util.nextInt(600,700)));
                 Aothanlinhxd.itemOptions.add(new Item.ItemOption(21, Util.nextInt(15,17)));
@@ -579,7 +598,7 @@ public class Mob {
             }
         }
         if (this.zone.map.mapId >= 105 && this.zone.map.mapId <= 110) {
-            if(Util.isTrue(5, 100000)){
+            if(Util.isTrue(2, 100000)){
                 Item Gangthanlinh = ItemService.gI().createNewItem((short) (562));
                 Gangthanlinh.itemOptions.add(new Item.ItemOption(0, Util.nextInt(6000,7000)));
                 Gangthanlinh.itemOptions.add(new Item.ItemOption(21, Util.nextInt(15,17)));
@@ -589,7 +608,7 @@ public class Mob {
             }
         }
         if (this.zone.map.mapId >= 105 && this.zone.map.mapId <= 110) {
-            if(Util.isTrue(5, 100000)){
+            if(Util.isTrue(2, 100000)){
                 Item Gangthanlinhxd = ItemService.gI().createNewItem((short) (566));
                 Gangthanlinhxd.itemOptions.add(new Item.ItemOption(0, Util.nextInt(6500,7500)));
                 Gangthanlinhxd.itemOptions.add(new Item.ItemOption(21, Util.nextInt(15,17)));
@@ -599,7 +618,7 @@ public class Mob {
             }
         }
         if (this.zone.map.mapId >= 105 && this.zone.map.mapId <= 110) {
-            if(Util.isTrue(5, 100000)){
+            if(Util.isTrue(2, 100000)){
                 Item Gangthanlinhnm = ItemService.gI().createNewItem((short) (564));
                 Gangthanlinhnm.itemOptions.add(new Item.ItemOption(0, Util.nextInt(5500,6500)));
                 Gangthanlinhnm.itemOptions.add(new Item.ItemOption(21, Util.nextInt(15,17)));
@@ -609,7 +628,7 @@ public class Mob {
             }
         }
         if (this.zone.map.mapId >= 105 && this.zone.map.mapId <= 110) {
-            if(Util.isTrue(5, 60000)){
+            if(Util.isTrue(2, 60000)){
                 Item Giaythanlinh = ItemService.gI().createNewItem((short) (563));
                 Giaythanlinh.itemOptions.add(new Item.ItemOption(23, Util.nextInt(50,60)));
                 Giaythanlinh.itemOptions.add(new Item.ItemOption(21, Util.nextInt(15,17)));
@@ -619,7 +638,7 @@ public class Mob {
             }
         }
         if (this.zone.map.mapId >= 105 && this.zone.map.mapId <= 110) {
-            if(Util.isTrue(5, 60000)){
+            if(Util.isTrue(2, 60000)){
                 Item Giaythanlinhxd = ItemService.gI().createNewItem((short) (567));
                 Giaythanlinhxd.itemOptions.add(new Item.ItemOption(23, Util.nextInt(55,65)));
                 Giaythanlinhxd.itemOptions.add(new Item.ItemOption(21, Util.nextInt(15,17)));
@@ -629,7 +648,7 @@ public class Mob {
             }
         }
         if (this.zone.map.mapId >= 105 && this.zone.map.mapId <= 110) {
-            if(Util.isTrue(5, 60000)){
+            if(Util.isTrue(2, 60000)){
                 Item Giaythanlinhnm = ItemService.gI().createNewItem((short) (565));
                 Giaythanlinhnm.itemOptions.add(new Item.ItemOption(23, Util.nextInt(65,75)));
                 Giaythanlinhnm.itemOptions.add(new Item.ItemOption(21, Util.nextInt(15,17)));
@@ -639,7 +658,7 @@ public class Mob {
             }
         }
         if (this.zone.map.mapId >= 105 && this.zone.map.mapId <= 110) {
-            if(Util.isTrue(5, 100000)){
+            if(Util.isTrue(2, 100000)){
                 Item Nhanthanlinh = ItemService.gI().createNewItem((short) (561));
                 Nhanthanlinh.itemOptions.add(new Item.ItemOption(14, Util.nextInt(13,16)));
                 Nhanthanlinh.itemOptions.add(new Item.ItemOption(21, Util.nextInt(15,17)));
@@ -748,7 +767,7 @@ public class Mob {
         if (this.zone.map.mapId >= 105 && this.zone.map.mapId <= 110){
             if(item1.isNotNullItem()){
                 if (item1.template.id == 1192){ // Id cải trang
-                    if (Util.isTrue(1, 500)) {    
+                    if (Util.isTrue(30, 500)) {    
                         Item Thoivang = ItemService.gI().createNewItem((short) (457));                
                         InventoryServiceNew.gI().addItemBag(player, Thoivang);
                         InventoryServiceNew.gI().sendItemBags(player);
@@ -782,7 +801,7 @@ public class Mob {
         if (this.zone.map.mapId >= 105 && this.zone.map.mapId <= 110){
             if(item1.isNotNullItem()){
             if (item1.template.id == 1192){ // Id cải trang
-        if (Util.isTrue(1, 400)) {    
+        if (Util.isTrue(20, 100)) {    
             Item Dangusac = ItemService.gI().createNewItem((short) (674));                
                 InventoryServiceNew.gI().addItemBag(player, Dangusac);
                 InventoryServiceNew.gI().sendItemBags(player);

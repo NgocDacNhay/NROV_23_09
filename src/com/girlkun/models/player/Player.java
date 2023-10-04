@@ -11,6 +11,7 @@ import com.girlkun.models.intrinsic.IntrinsicPlayer;
 import com.girlkun.models.item.Item;
 import com.girlkun.models.item.ItemTime;
 import com.girlkun.models.npc.specialnpc.MagicTree;
+import com.girlkun.card.Card;
 import com.girlkun.consts.ConstPlayer;
 import com.girlkun.consts.ConstTask;
 import com.girlkun.models.npc.specialnpc.MabuEgg;
@@ -155,6 +156,7 @@ public class Player {
     public short idAura = -1;
     public String Hppl = "\n";
     public int levelWoodChest;
+    public List<Card> Cards = new ArrayList<>();
 
     public Player() {
         lastTimeUseOption = System.currentTimeMillis();

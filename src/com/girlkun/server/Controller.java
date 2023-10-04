@@ -3,6 +3,9 @@ package com.girlkun.server;
 import com.girlkun.database.GirlkunDB;
 import com.girlkun.models.item.Item;
 import com.girlkun.result.GirlkunResultSet;
+import com.girlkun.card.Card;
+import com.girlkun.card.RadarCard;
+import com.girlkun.card.RadarService;
 import com.girlkun.consts.ConstIgnoreName;
 import com.girlkun.consts.ConstMap;
 import com.girlkun.services.*;
@@ -19,6 +22,7 @@ import com.girlkun.consts.ConstNpc;
 import com.girlkun.consts.ConstTask;
 import com.girlkun.data.ItemData;
 import com.girlkun.jdbc.daos.PlayerDAO;
+import com.girlkun.kygui.ShopKyGuiService;
 import com.girlkun.models.boss.BossManager;
 import com.girlkun.models.map.blackball.BlackBallWar;
 import com.girlkun.models.npc.NpcManager;
@@ -34,7 +38,6 @@ import static com.girlkun.services.func.Input.CHOOSE_LEVEL_BDKB;
 import static com.girlkun.services.func.Input.NUMERIC;
 
 import com.girlkun.services.func.LuckyRound;
-import com.girlkun.services.func.RadaService;
 import com.girlkun.services.func.TransactionService;
 import com.girlkun.utils.Logger;
 
@@ -65,6 +68,57 @@ public class Controller implements IMessageHandler {
 //            }
 //            System.out.println("***************************CMD receive: " + cmd);
             switch (cmd) {
+
+                case -100:
+                    byte action1 = _msg.reader().readByte();
+                    switch (action1) {
+                        case 0:
+                            // ký gửi
+                            short idItem = _msg.reader().readShort();
+                            byte moneyType = _msg.reader().readByte();
+                            int money = _msg.reader().readInt();
+                            int quantity;
+                            if (player.getSession().version >= 222) {
+                                quantity = _msg.reader().readInt();
+                            } else {
+                                quantity = _msg.reader().readByte();
+                            }
+                            if (quantity > 0) {
+                                ShopKyGuiService.gI().KiGui(player, idItem, money, moneyType, quantity);
+                            }
+                            break;
+                        case 1:
+                        case 2: // hủy ký gửi
+
+                            // nhận tiền
+                            idItem = _msg.reader().readShort();
+                            ShopKyGuiService.gI().claimOrDel(player, action1, idItem);
+                            break;
+                        case 3:
+                            // buy item
+                            idItem = _msg.reader().readShort();
+                            _msg.reader().readByte();
+                            _msg.reader().readInt();
+                            ShopKyGuiService.gI().buyItem(player, idItem);
+                            break;
+                        case 4:
+                            // next page
+                            moneyType = _msg.reader().readByte();
+                            money = _msg.reader().readByte();
+                            ShopKyGuiService.gI().openShopKyGui(player, moneyType, money);
+                            break;
+                        case 5:
+                            // up top
+                            idItem = _msg.reader().readShort();
+                            ShopKyGuiService.gI().upItemToTop(player, idItem);
+                            break;
+                        default:
+                            Service.gI().sendThongBao(player, "Không thể thực hiện");
+                            break;
+                        // hủy ký gửi
+                    }
+                    break;
+
                 case -105: 
                     if(player.type == 0 && player.maxTime == 30){
                         ChangeMapService.gI().changeMap(player, 102,0, 100, 336);
@@ -76,7 +130,39 @@ public class Controller implements IMessageHandler {
                     Service.getInstance().regisAccount(_session, _msg);
                     break;
                 case 127:
-                    RadaService.gI().controller(player, _msg);
+                    if (player != null) {
+                        byte actionRadar = _msg.reader().readByte();
+                        switch (actionRadar) {
+                            case 0:
+                                RadarService.gI().sendRadar(player, player.Cards);
+                                break;
+                            case 1:
+                                short idC = _msg.reader().readShort();
+                                Card card = player.Cards.stream().filter(r -> r != null && r.Id == idC).findFirst().orElse(null);
+                                if (card != null) {
+                                    if (card.Level == 0) {
+                                        return;
+                                    }
+                                    if (card.Used == 0) {
+                                        if (player.Cards.stream().anyMatch(c -> c != null && c.Used == 5)) {
+                                            Service.gI().sendThongBao(player, "Số thẻ sử dụng đã đạt tối đa");
+                                            return;
+                                        }
+                                        card.Used = 1;
+                                        RadarCard radarTemplate = RadarService.gI().RADAR_TEMPLATE.stream().filter(r -> r.Id == idC).findFirst().orElse(null);
+                                        if (radarTemplate != null && card.Level >= 2) {
+                                            player.idAura = radarTemplate.AuraId;
+                                        }
+                                    } else {
+                                        card.Used = 0;
+                                        player.idAura = -1;
+                                    }
+                                    RadarService.gI().Radar1(player, idC, card.Used);
+                                    Service.gI().point(player);
+                                }
+                                break;
+                        }
+                    }
                     break;
                 case -127:
                     if (player != null) {
@@ -696,6 +782,7 @@ public class Controller implements IMessageHandler {
                 }
             }).start();
         }
+        
 
     }
 

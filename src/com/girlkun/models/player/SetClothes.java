@@ -33,7 +33,9 @@ public class SetClothes {
     public byte SetThienSu;
 
     public boolean godClothes;
+    public boolean isSDXungQuanh = false;
     public int ctHaiTac = -1;
+    public int ctSDDep = -1;
 
     public void setup() {
         setDefault();
@@ -69,6 +71,16 @@ public class SetClothes {
             }
         }
         
+        Item ct1 = this.player.inventory.itemsBody.get(5);
+        if (ct1.isNotNullItem()) {
+            switch (ct1.template.id) {
+                case 584:
+                    this.ctSDDep = ct1.template.id;
+                    break;
+
+            }
+        }
+
         this.player.setClothes.SetThienSu = 0;
            for (int i = 0; i < 5; i++) {
            Item item = this.player.inventory.itemsBody.get(i);
@@ -166,6 +178,9 @@ public class SetClothes {
                         case 193:
                             isActSet = true;
                             basil++;
+                            break;
+                        case 117:
+                            isSDXungQuanh = true;
                             break;
 //                        case 34:
 //                            isActSet = true;

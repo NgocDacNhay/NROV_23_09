@@ -25,7 +25,7 @@ public class ThienSuWhis extends Boss {
         int randommanhhiem = new Random().nextInt(manhhiem.length);
         int randomda = new Random().nextInt(dats.length);
            if (Util.isTrue(50, 100)) {
-            Service.getInstance().dropItemMap(this.zone, Util.manhTS(zone, manhhiem[randommanhhiem], Util.nextInt(20, 40), this.location.x, this.location.y, plKill.id));
+            Service.getInstance().dropItemMap(this.zone, Util.manhTS(zone, manhhiem[randommanhhiem], Util.nextInt(200, 400), this.location.x, this.location.y, plKill.id));
             plKill.diemsk += 1;
         } else {
             Service.getInstance().dropItemMap(this.zone, Util.manhTS(zone, dats[randomda], 1, this.location.x, this.location.y, plKill.id));

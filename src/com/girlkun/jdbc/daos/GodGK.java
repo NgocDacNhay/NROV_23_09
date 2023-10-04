@@ -2,6 +2,8 @@ package com.girlkun.jdbc.daos;
 
 import com.girlkun.database.GirlkunDB;
 import com.girlkun.result.GirlkunResultSet;
+import com.girlkun.card.Card;
+import com.girlkun.card.OptionCard;
 import com.girlkun.consts.ConstPlayer;
 import com.girlkun.data.DataGame;
 import com.girlkun.models.clan.Clan;
@@ -50,7 +52,22 @@ import org.json.simple.JSONValue;
 
 
 public class GodGK {
+
 public static Boolean baotri = false;
+public static List<OptionCard> loadOptionCard(JSONArray json) {
+        List<OptionCard> ops = new ArrayList<>();
+        try {
+            for (int i = 0; i < json.size(); i++) {
+                JSONObject ob = (JSONObject) json.get(i);
+                if (ob != null) {
+                    ops.add(new OptionCard(Integer.parseInt(ob.get("id").toString()), Integer.parseInt(ob.get("param").toString()), Byte.parseByte(ob.get("active").toString())));
+                }
+            }
+        } catch (Exception e) {
+        }
+        return ops;
+    }
+
     public static synchronized Player login(MySession session, AntiLogin al) {
         Player player = null;
         GirlkunResultSet rs = null;
@@ -179,6 +196,16 @@ public static Boolean baotri = false;
                                 e.printStackTrace();
                             }
                             dataArray.clear();
+
+
+                            // data rada card
+                            dataArray = (JSONArray) jv.parse(rs.getString("data_card"));
+                            for (int i = 0; i < dataArray.size(); i++) {
+                                JSONObject obj = (JSONObject) dataArray.get(i);
+                                player.Cards.add(new Card(Short.parseShort(obj.get("id").toString()), Byte.parseByte(obj.get("amount").toString()), Byte.parseByte(obj.get("max").toString()), Byte.parseByte(obj.get("level").toString()), loadOptionCard((JSONArray) JSONValue.parse(obj.get("option").toString())), Byte.parseByte(obj.get("used").toString())));
+                            }
+                            dataArray.clear();
+
 
                             //data chỉ số
                             dataArray = (JSONArray) jv.parse(rs.getString("data_point"));

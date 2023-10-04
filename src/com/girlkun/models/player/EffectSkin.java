@@ -41,7 +41,9 @@ public class EffectSkin {
 
     public long lastTimeUpdateCTHT;
 
+
     public void update() {
+
         updateVoHinh();
         if (this.player.zone != null && !MapService.gI().isMapOffline(this.player.zone.map.mapId)) {
             updateOdo();
@@ -98,6 +100,11 @@ public class EffectSkin {
             }
         }
     }
+
+    
+
+    
+
 
     private void updateXenHutXungQuanh() {
         try {
