@@ -565,6 +565,7 @@ public class ShopServiceNew {
             Service.getInstance().sendMoney(pl);
             Service.getInstance().sendThongBao(pl, "Đã bán " + item.template.name
                     + " thu được " + Util.numberToMoney(cost) + " vàng");
+            pl.achievement.plusCount(9);
             if (where == 0) {
                 InventoryServiceNew.gI().subQuantityItemsBody(pl, item, quantity);
                 InventoryServiceNew.gI().sendItemBody(pl);

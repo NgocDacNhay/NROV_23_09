@@ -5,6 +5,7 @@ import com.girlkun.models.map.bdkb.BdkbService;
 import com.girlkun.models.skill.PlayerSkill;
 
 import java.util.List;
+import java.util.Timer;
 
 import com.girlkun.models.clan.Clan;
 import com.girlkun.models.intrinsic.IntrinsicPlayer;
@@ -44,6 +45,9 @@ import com.girlkun.services.func.CombineNew;
 import com.girlkun.services.func.TopService;
 import com.girlkun.utils.Logger;
 import com.girlkun.utils.Util;
+
+import BoMong.BoMong;
+
 import java.util.Date;
 
 import java.util.ArrayList;
@@ -58,6 +62,10 @@ public class Player {
 
     public boolean beforeDispose;
 
+    public BoMong achievement;
+    public boolean lockPK;
+    public Timer timerDHVT;
+    public Player _friendGiaoDich;
     public byte capCS;
     public byte capTT;
     public boolean titleitem;
@@ -182,6 +190,7 @@ public class Player {
         gift = new Gift(this);
         effectSkin = new EffectSkin(this);
         skillSpecial = new SkillSpecial(this);
+        achievement = new BoMong(this);
     }
 
     //--------------------------------------------------------------------------
@@ -256,11 +265,10 @@ public class Player {
                     BlackBallWar.gI().update(this);
                     MapMaBu.gI().update(this);
                     if (this.iDMark.isGoToGas() && Util.canDoWithTime(this.iDMark.getLastTimeGotoGas(), 3000)) {
-//                        ChangeMapService.gI().changeMapBySpaceShip(this, 149, -1, 163);
                         ChangeMapService.gI().changeMapBySpaceShip(this, 149, -1, 163);
                         this.iDMark.setGoToGas(false);
                     }
-                    if (!isBoss && this.iDMark.isGotoFuture() && Util.canDoWithTime(this.iDMark.getLastTimeGoToFuture(), 6000)) {
+                    if (!isBoss && this.iDMark.isGotoFuture() && Util.canDoWithTime(this.iDMark.getLastTimeGoToFuture(), 3000)) {
                         ChangeMapService.gI().changeMapBySpaceShip(this, 102, -1, Util.nextInt(60, 200));
                         this.iDMark.setGotoFuture(false);
                     }
@@ -655,6 +663,9 @@ public class Player {
             if (!plAtt.itemTime.isUseAnDanh) {
                 FriendAndEnemyService.gI().addEnemy(this, plAtt);
             }
+        }
+        if (this.isPl() && plAtt != null && plAtt.isPl()) {
+            plAtt.achievement.plusCount(2);
         }
         //kết thúc pk
         if (this.pvp != null) {

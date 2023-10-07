@@ -46,7 +46,7 @@ public class Util {
         return Arrays.toString(arr).contains(key);
     }
     
-       public static void setTimeout(Runnable runnable, int delay) {
+    public static void setTimeout(Runnable runnable, int delay) {
         new Thread(() -> {
             try {
                 Thread.sleep(delay);
@@ -593,5 +593,9 @@ public class Util {
             answer[i] = list.get(i);
         Arrays.sort(answer);
         return answer;
+    }
+
+    public static int nextIntDhvt(int from, int to) {
+        return from + rand.nextInt(to - from);
     }
 }

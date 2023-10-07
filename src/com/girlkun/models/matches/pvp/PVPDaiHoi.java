@@ -48,7 +48,7 @@ public class PVPDaiHoi extends PVP{
 
     @Override
     public void update() {
-        if(Util.canDoWithTime(lastTimePVP, 180000)){
+        if(Util.canDoWithTime(lastTimePVP, 120000)){
             if(p1.nPoint.hp > p2.nPoint.hp){
                 ChangeMapService.gI().changeMapBySpaceShip(p2,21 +p2.gender, 0, -1);
                 p1.pvp.lose(p2, TYPE_LOSE_PVP.DEAD);

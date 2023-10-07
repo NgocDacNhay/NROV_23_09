@@ -110,28 +110,32 @@ public class ChangeMapService {
      */
     public void openZoneUI(Player pl) {
         if (pl.haveDuongTang) {
-            Service.getInstance().sendThongBao(pl, "Đang dắt đường tăng không thể đổi khu");
+        //    Service.getInstance().sendThongBao(pl, "Đang dắt đường tăng không thể đổi khu");
             return;
         }
         if (pl.zone == null) {
-            Service.getInstance().sendThongBaoOK(pl, "Không thể đổi khu vực trong map này");
+        //    Service.getInstance().sendThongBaoOK(pl, "Không thể đổi khu vực trong map này");
             return;
         }
         if (!pl.isAdmin()) {
             if (MapService.gI().isMapOffline(pl.zone.map.mapId)) {
-                Service.getInstance().sendThongBaoOK(pl, "Không thể đổi khu vực trong map này");
+        //        Service.getInstance().sendThongBaoOK(pl, "Không thể đổi khu vực trong map này");
                 return;
             }
-             if (MapService.gI().isMapKhiGas(pl.zone.map.mapId)) {
-                Service.getInstance().sendThongBaoOK(pl, "Không thể đổi khu vực trong map này");
+            if (MapService.gI().isMapKhiGas(pl.zone.map.mapId)) {
+        //        Service.getInstance().sendThongBaoOK(pl, "Không thể đổi khu vực trong map này");
+                return;
+            }
+            if (MapService.gI().isMapBanDoKhoBau(pl.zone.map.mapId)) {
+        //        Service.getInstance().sendThongBaoOK(pl, "Không thể đổi khu vực trong map này");
                 return;
             }
             if (MapService.gI().isMapDoanhTrai(pl.zone.map.mapId)) {
-                Service.getInstance().sendThongBaoOK(pl, "Không thể đổi khu vực trong map này");
+        //        Service.getInstance().sendThongBaoOK(pl, "Không thể đổi khu vực trong map này");
                 return;
             }
             if (MapService.gI().isMapMaBu(pl.zone.map.mapId)) {
-                Service.getInstance().sendThongBaoOK(pl, "Không thể đổi khu vực trong map này");
+        //        Service.getInstance().sendThongBaoOK(pl, "Không thể đổi khu vực trong map này");
                 return;
             }
         }
@@ -161,29 +165,33 @@ public class ChangeMapService {
      */
     public void changeZone(Player pl, int zoneId) {
         if (pl.zone == null) {
-            Service.getInstance().sendThongBaoOK(pl, "Không thể đổi khu vực trong map này");
+        //    Service.getInstance().sendThongBaoOK(pl, "Không thể đổi khu vực trong map này");
             return;
         }
         
         if (pl.haveDuongTang) {
-            Service.getInstance().sendThongBao(pl, "Đang dắt đường tăng không thể đổi khu");
+        //    Service.getInstance().sendThongBao(pl, "Đang dắt đường tăng không thể đổi khu");
             return;
         }
         if (!pl.isAdmin() || !pl.isBoss) {
             if (MapService.gI().isMapOffline(pl.zone.map.mapId)) {
-                Service.getInstance().sendThongBaoOK(pl, "Không thể đổi khu vực trong map này");
+            //    Service.getInstance().sendThongBaoOK(pl, "Không thể đổi khu vực trong map này");
                 return;
             }
             if (MapService.gI().isMapDoanhTrai(pl.zone.map.mapId)) {
-                Service.getInstance().sendThongBaoOK(pl, "Không thể đổi khu vực trong map này");
+            //    Service.getInstance().sendThongBaoOK(pl, "Không thể đổi khu vực trong map này");
                 return;
             }
-             if (MapService.gI().isMapKhiGas(pl.zone.map.mapId)) {
-                Service.getInstance().sendThongBaoOK(pl, "Không thể đổi khu vực trong map này");
+            if (MapService.gI().isMapKhiGas(pl.zone.map.mapId)) {
+            //    Service.getInstance().sendThongBaoOK(pl, "Không thể đổi khu vực trong map này");
+                return;
+            }
+            if (MapService.gI().isMapBanDoKhoBau(pl.zone.map.mapId)) {
+            //    Service.getInstance().sendThongBaoOK(pl, "Không thể đổi khu vực trong map này");
                 return;
             }
             if (MapService.gI().isMapMaBu(pl.zone.map.mapId)) {
-                Service.getInstance().sendThongBaoOK(pl, "Không thể đổi khu vực trong map này");
+            //    Service.getInstance().sendThongBaoOK(pl, "Không thể đổi khu vực trong map này");
                 return;
             }
         }

@@ -282,5 +282,6 @@ public class ConstNpc {
     public static final int SIDE_BOX_ITEM_REWARD = 511;
     
     public static final int RUONG_GO = 512;
+    public static int MENU_DHVT = 560;
 
 }

@@ -1,5 +1,7 @@
 package com.girlkun.models.matches.pvp;
 
+import com.girlkun.kygui.ShopKyGuiManager;
+import com.girlkun.models.map.daihoi.DaiHoiService;
 import com.girlkun.models.player.Player;
 import com.girlkun.server.Manager;
 import com.girlkun.utils.Util;
@@ -63,7 +65,10 @@ public class DaiHoiVoThuat implements Runnable{
                 Second = calendar.get(Calendar.SECOND);
                 Minutes = calendar.get(Calendar.MINUTE);
                 Hour = calendar.get(Calendar.HOUR_OF_DAY);
-               
+                if(Util.canDoWithTime(ShopKyGuiManager.gI().lastTimeUpdate, 1800000)){
+                    ShopKyGuiManager.gI().lastTimeUpdate = System.currentTimeMillis();
+                    ShopKyGuiManager.gI().save();
+                }
                 DaiHoiVoThuatService.gI(getDaiHoiNow()).Update();
                 Thread.sleep(1000);
             }catch(Exception e){

@@ -253,6 +253,7 @@ public class PlayerService {
             if (canHs) {
                 Service.getInstance().sendMoney(player);
                 Service.getInstance().hsChar(player, player.nPoint.hpMax, player.nPoint.mpMax);
+                player.achievement.plusCount(12);
             }
         }
     }

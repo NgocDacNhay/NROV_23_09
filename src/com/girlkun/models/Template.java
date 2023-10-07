@@ -4,12 +4,38 @@ import com.girlkun.consts.ConstMap;
 import com.girlkun.models.item.Item;
 import com.girlkun.models.map.WayPoint;
 import com.girlkun.models.skill.Skill;
+
+import lombok.Data;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 
 public class Template {
+
+    @Data
+    public static class AchievementTemplate {
+
+        int index;
+        String info1;
+        String info2;
+        int count_Purpose;
+        int gem;
+
+        public AchievementTemplate() {
+
+        }
+
+        public AchievementTemplate(int index, String info1, String info2, int count, int gem) {
+            this.index = index;
+            this.info1 = info1;
+            this.info2 = info2;
+            this.count_Purpose = count;
+            this.gem = gem;
+        }
+
+    }
 
     public static class ItemOptionTemplate {
 
@@ -65,6 +91,8 @@ public class Template {
 
         public ItemTemplate() {
         }
+
+
 
         public ItemTemplate(short id, byte type, byte gender, String name, String description, short iconID, short part, boolean isUpToUp, int strRequire) {
             this.id = id;

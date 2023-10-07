@@ -614,6 +614,28 @@ public static List<OptionCard> loadOptionCard(JSONArray json) {
                                 player.pet = pet;
                             }
 
+                            // nhiem vu bo mong 
+                            JSONObject achievementObject = (JSONObject) JSONValue.parse(rs.getString("info_achievement"));
+                            player.achievement.numPvpWin = Integer.parseInt(String.valueOf(achievementObject.get("numPvpWin")));
+                            player.achievement.numSkillChuong = Integer.parseInt(String.valueOf(achievementObject.get("numSkillChuong")));
+                            player.achievement.numFly = Integer.parseInt(String.valueOf(achievementObject.get("numFly")));
+                            player.achievement.numKillMobFly = Integer.parseInt(String.valueOf(achievementObject.get("numKillMobFly")));
+                            player.achievement.numKillNguoiRom = Integer.parseInt(String.valueOf(achievementObject.get("numKillNguoiRom")));
+                            player.achievement.numHourOnline = Long.parseLong(String.valueOf(achievementObject.get("numHourOnline")));
+                            player.achievement.numGivePea = Integer.parseInt(String.valueOf(achievementObject.get("numGivePea")));
+                            player.achievement.numSellItem = Integer.parseInt(String.valueOf(achievementObject.get("numSellItem")));
+                            player.achievement.numPayMoney = Integer.parseInt(String.valueOf(achievementObject.get("numPayMoney")));
+                            player.achievement.numKillSieuQuai = Integer.parseInt(String.valueOf(achievementObject.get("numKillSieuQuai")));
+                            player.achievement.numHoiSinh = Integer.parseInt(String.valueOf(achievementObject.get("numHoiSinh")));
+                            player.achievement.numSkillDacBiet = Integer.parseInt(String.valueOf(achievementObject.get("numSkillDacBiet")));
+                            player.achievement.numPickGem = Integer.parseInt(String.valueOf(achievementObject.get("numPickGem")));
+
+                            dataArray = (JSONArray) JSONValue.parse(String.valueOf(achievementObject.get("listReceiveGem")));
+                            for (Byte i = 0; i < dataArray.size(); i++) {
+                                player.achievement.listReceiveGem.add(Boolean.valueOf(String.valueOf(dataArray.get(i))));
+                            }
+                            dataArray.clear();
+
                             player.nPoint.hp = plHp;
                             player.nPoint.mp = plMp;
                             player.iDMark.setLoadedAllDataPlayer(true);
@@ -996,6 +1018,26 @@ public static List<OptionCard> loadOptionCard(JSONArray json) {
                 if (thoi_vang > x) {
                     Logger.error("play:" + player.name);
                     Logger.error("thoi_vang:" + thoi_vang);
+                }
+
+                JSONObject achievementObject = (JSONObject) JSONValue.parse(rs.getString("info_achievement"));
+                player.achievement.numPvpWin = Integer.parseInt(String.valueOf(achievementObject.get("numPvpWin")));
+                player.achievement.numSkillChuong = Integer.parseInt(String.valueOf(achievementObject.get("numSkillChuong")));
+                player.achievement.numFly = Integer.parseInt(String.valueOf(achievementObject.get("numFly")));
+                player.achievement.numKillMobFly = Integer.parseInt(String.valueOf(achievementObject.get("numKillMobFly")));
+                player.achievement.numKillNguoiRom = Integer.parseInt(String.valueOf(achievementObject.get("numKillNguoiRom")));
+                player.achievement.numHourOnline = Long.parseLong(String.valueOf(achievementObject.get("numHourOnline")));
+                player.achievement.numGivePea = Integer.parseInt(String.valueOf(achievementObject.get("numGivePea")));
+                player.achievement.numSellItem = Integer.parseInt(String.valueOf(achievementObject.get("numSellItem")));
+                player.achievement.numPayMoney = Integer.parseInt(String.valueOf(achievementObject.get("numPayMoney")));
+                player.achievement.numKillSieuQuai = Integer.parseInt(String.valueOf(achievementObject.get("numKillSieuQuai")));
+                player.achievement.numHoiSinh = Integer.parseInt(String.valueOf(achievementObject.get("numHoiSinh")));
+                player.achievement.numSkillDacBiet = Integer.parseInt(String.valueOf(achievementObject.get("numSkillDacBiet")));
+                player.achievement.numPickGem = Integer.parseInt(String.valueOf(achievementObject.get("numPickGem")));
+
+                dataArray = (JSONArray) JSONValue.parse(String.valueOf(achievementObject.get("listReceiveGem")));
+                for (Byte i = 0; i < dataArray.size(); i++) {
+                    player.achievement.listReceiveGem.add((Boolean) dataArray.get(i));
                 }
 
             }
@@ -1448,6 +1490,27 @@ public static List<OptionCard> loadOptionCard(JSONArray json) {
                     pet.nPoint.hp = hp;
                     pet.nPoint.mp = mp;
                     player.pet = pet;
+                }
+
+                JSONObject achievementObject = (JSONObject) JSONValue.parse(rs.getString("info_achievement"));
+                player.achievement.numPvpWin = Integer.parseInt(String.valueOf(achievementObject.get("numPvpWin")));
+                player.achievement.numSkillChuong = Integer.parseInt(String.valueOf(achievementObject.get("numSkillChuong")));
+                player.achievement.numFly = Integer.parseInt(String.valueOf(achievementObject.get("numFly")));
+                player.achievement.numKillMobFly = Integer.parseInt(String.valueOf(achievementObject.get("numKillMobFly")));
+                player.achievement.numKillNguoiRom = Integer.parseInt(String.valueOf(achievementObject.get("numKillNguoiRom")));
+                player.achievement.numHourOnline = Long.parseLong(String.valueOf(achievementObject.get("numHourOnline")));
+                player.achievement.numGivePea = Integer.parseInt(String.valueOf(achievementObject.get("numGivePea")));
+                player.achievement.numSellItem = Integer.parseInt(String.valueOf(achievementObject.get("numSellItem")));
+                player.achievement.numPayMoney = Integer.parseInt(String.valueOf(achievementObject.get("numPayMoney")));
+                player.achievement.numKillSieuQuai = Integer.parseInt(String.valueOf(achievementObject.get("numKillSieuQuai")));
+                player.achievement.numHoiSinh = Integer.parseInt(String.valueOf(achievementObject.get("numHoiSinh")));
+                player.achievement.numSkillDacBiet = Integer.parseInt(String.valueOf(achievementObject.get("numSkillDacBiet")));
+                player.achievement.numPickGem = Integer.parseInt(String.valueOf(achievementObject.get("numPickGem")));
+
+                dataArray = (JSONArray) JSONValue.parse(String.valueOf(achievementObject.get("listReceiveGem")));
+                System.err.println("lỗi load bò mộng: " + dataArray.size());
+                for (Byte i = 0; i < dataArray.size(); i++) {
+                    player.achievement.listReceiveGem.add((Boolean) dataArray.get(i));
                 }
 
                 player.nPoint.hp = plHp;

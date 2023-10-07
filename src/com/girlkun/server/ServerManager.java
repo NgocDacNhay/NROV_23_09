@@ -9,6 +9,7 @@ import com.girlkun.models.boss.BossManager;
 import com.girlkun.models.item.Item;
 import com.girlkun.models.matches.pvp.DaiHoiVoThuat;
 import com.girlkun.models.map.challenge.MartialCongressManager;
+import com.girlkun.models.map.daihoi.DaiHoiService;
 import com.girlkun.models.player.Player;
 import com.girlkun.network.session.ISession;
 import com.girlkun.network.example.MessageSendCollect;
@@ -108,6 +109,7 @@ public class ServerManager {
             Thread.sleep(1000);
             BossManager.gI().loadBoss();
             Manager.MAPS.forEach(com.girlkun.models.map.Map::initBoss);
+            DaiHoiService.gI().initDaiHoiVoThuat();
         } catch (InterruptedException ex) {
             java.util.logging.Logger.getLogger(BossManager.class.getName()).log(Level.SEVERE, null, ex);
         }

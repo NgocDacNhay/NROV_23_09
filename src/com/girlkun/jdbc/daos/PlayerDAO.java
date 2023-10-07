@@ -19,7 +19,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 
 import org.json.simple.JSONArray;
@@ -285,15 +289,36 @@ public class PlayerDAO {
             String data_card = dataArray.toJSONString();
             dataArray.clear();
 
+            JSONObject achievementObject = new JSONObject();
+            achievementObject.put("numPvpWin", 0);
+            achievementObject.put("numSkillChuong", 0);
+            achievementObject.put("numFly", 0);
+            achievementObject.put("numKillMobFly", 0);
+            achievementObject.put("numKillNguoiRom", 0);
+            achievementObject.put("numHourOnline", 0);
+            achievementObject.put("numGivePea", 0);
+            achievementObject.put("numSellItem", 0);
+            achievementObject.put("numPayMoney", 0);
+            achievementObject.put("numKillSieuQuai", 0);
+            achievementObject.put("numHoiSinh", 0);
+            achievementObject.put("numSkillDacBiet", 0);
+            achievementObject.put("numPickGem", 0);
+
+            List<Boolean> list = new ArrayList<>(Arrays.asList(new Boolean[Manager.ACHIEVEMENTS.size()]));
+            Collections.fill(list, Boolean.FALSE);
+            dataArray.addAll(list);
+            achievementObject.put("listReceiveGem", dataArray);
+            String info_achive = achievementObject.toJSONString();
+
             GirlkunDB.executeUpdate("insert into player"
                             + "(account_id, name, head, gender, have_tennis_space_ship, clan_id_sv" + Manager.SERVER + ", "
                             + "data_inventory, data_location, data_point, data_magic_tree, items_body, "
                             + "items_bag, items_box, items_box_lucky_round, friends, enemies, data_intrinsic, data_item_time,"
                             + "data_task, data_mabu_egg, data_dua, data_charm, skills, skills_shortcut, pet,"
-                            + "data_black_ball, data_side_task, data_card)"
+                            + "data_black_ball, data_side_task, data_card, info_achievement)"
                             + "values ()", userId, name, hair, gender, 0, -1, inventory, location, point, magicTree,
                     itemsBody, itemsBag, itemsBox, itemsBoxLuckyRound, friends, enemies, intrinsic,
-                    itemTime, task, mabuEgg, timedua, charms, skills, skillsShortcut, petData, dataBlackBall, dataSideTask, data_card);
+                    itemTime, task, mabuEgg, timedua, charms, skills, skillsShortcut, petData, dataBlackBall, dataSideTask, data_card, info_achive);
             Logger.success("Tạo player mới thành công!");
             return true;
         } catch (Exception e) {
@@ -696,11 +721,31 @@ public class PlayerDAO {
                 }
                 String dataBlackBall = dataArray.toJSONString();
                 dataArray.clear();
+
+                JSONObject achievementObject = new JSONObject();
+                achievementObject.put("numPvpWin", player.achievement.numPvpWin);
+                achievementObject.put("numSkillChuong", player.achievement.numSkillChuong);
+                achievementObject.put("numFly", player.achievement.numFly);
+                achievementObject.put("numKillMobFly", player.achievement.numKillMobFly);
+                achievementObject.put("numKillNguoiRom", player.achievement.numKillNguoiRom);               
+                achievementObject.put("numHourOnline", player.achievement.numHourOnline);
+                achievementObject.put("numGivePea", player.achievement.numGivePea);
+                achievementObject.put("numSellItem", player.achievement.numSellItem);
+                achievementObject.put("numPayMoney", player.achievement.numPayMoney);
+                achievementObject.put("numKillSieuQuai", player.achievement.numKillSieuQuai);
+                achievementObject.put("numHoiSinh", player.achievement.numHoiSinh);
+                achievementObject.put("numSkillDacBiet", player.achievement.numSkillDacBiet);
+                achievementObject.put("numPickGem", player.achievement.numPickGem);
+
+                dataArray.addAll(player.achievement.listReceiveGem);
+                achievementObject.put("listReceiveGem", dataArray);
+                String info_achive = achievementObject.toJSONString();
+
                 String query = " update player set head = ?, have_tennis_space_ship = ?,"
                         + "clan_id_sv" + Manager.SERVER + " = ?, data_inventory = ?, data_location = ?, data_point = ?, data_magic_tree = ?,"
                         + "items_body = ?, items_bag = ?, items_box = ?, items_box_lucky_round = ?, friends = ?,"
                         + "enemies = ?, data_intrinsic = ?, data_item_time = ?, data_task = ?, data_mabu_egg = ?, data_dua = ?, pet = ?,"
-                        + "data_black_ball = ?, data_side_task = ?, data_charm = ?, skills = ?, skills_shortcut = ?, pointPvp=?, NguHanhSonPoint=?,last_time_dd=?,diemsk=?,diemhotong=?,data_card=? where id = ?";
+                        + "data_black_ball = ?, data_side_task = ?, data_charm = ?, skills = ?, skills_shortcut = ?, pointPvp=?, NguHanhSonPoint=?,last_time_dd=?,diemsk=?,diemhotong=?,data_card=?, info_achievement =? where id = ?";
                 GirlkunDB.executeUpdate(query,
                         player.head,
                         player.haveTennisSpaceShip,
@@ -732,6 +777,7 @@ public class PlayerDAO {
                         player.diemsk,
                         player.diemhotong,
                         JSONValue.toJSONString(player.Cards),
+                        info_achive,
 //                        player.diemchientruong,
                         player.id);
             //    Logger.success("Total time save player " + player.name + " thành công! " + (System.currentTimeMillis() - st) + "\n");

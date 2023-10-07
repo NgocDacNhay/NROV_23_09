@@ -124,6 +124,10 @@ public class Controller implements IMessageHandler {
                         ChangeMapService.gI().changeMap(player, 102,0, 100, 336);
                     }else if(player.type == 1 && player.maxTime == 5){
                         ChangeMapService.gI().changeMap(player, 160,0, -1, 5);
+                    }else if(player.type == 5 && player.maxTime == 30){
+                        ChangeMapService.gI().changeMap(player, 135,0, -1, 5);
+                    }else if(player.type == 1 && player.maxTime == 30){
+                        ChangeMapService.gI().changeMap(player, 149,0, -1, 5);
                     }
                     break;
                 case 42:
@@ -258,11 +262,27 @@ public class Controller implements IMessageHandler {
                     }
                     break;
                 case 29:
+                    if (player != null && (MapService.gI().isMapOffline(player.zone.map.mapId) 
+                        || MapService.gI().isMapBanDoKhoBau(player.zone.map.mapId)
+                        || MapService.gI().isMapDoanhTrai(player.zone.map.mapId)
+                        || MapService.gI().isMapKhiGas(player.zone.map.mapId)
+                        || MapService.gI().isMapMaBu(player.zone.map.mapId))){
+                    //        Service.getInstance().sendThongBao(player, "Không thể đổi khu vực trong map này");
+                            return;
+                    }
                     if (player != null) {
                         ChangeMapService.gI().openZoneUI(player);
                     }
                     break;
                 case 21:
+                    if (player != null && (MapService.gI().isMapOffline(player.zone.map.mapId) 
+                        || MapService.gI().isMapBanDoKhoBau(player.zone.map.mapId)
+                        || MapService.gI().isMapDoanhTrai(player.zone.map.mapId)
+                        || MapService.gI().isMapKhiGas(player.zone.map.mapId)
+                        || MapService.gI().isMapMaBu(player.zone.map.mapId))){
+                        //    Service.getInstance().sendThongBao(player, "Không thể đổi khu vực trong map này");
+                            return;
+                    }
                     if (player != null) {
                         int zoneId = _msg.reader().readByte();
                         ChangeMapService.gI().changeZone(player, zoneId);
@@ -273,6 +293,12 @@ public class Controller implements IMessageHandler {
                         ChatGlobalService.gI().chat(player, _msg.reader().readUTF());
                     }
                     break;
+                case -76:
+                    if (player != null) {
+                        byte index = _msg.reader().readByte();
+                        player.achievement.receiveGem(index);
+                    }
+                    break; 
                 case -79:
                     if (player != null) {
                         Service.getInstance().getPlayerMenu(player, _msg.reader().readInt());
@@ -280,7 +306,7 @@ public class Controller implements IMessageHandler {
                     break;
                 case -113:
                     if (player != null) {
-                        for (int i = 0; i < 5; i++) {
+                        for (int i = 0; i < 10; i++) {
                             player.playerSkill.skillShortCut[i] = _msg.reader().readByte();
                         }
                         player.playerSkill.sendSkillShortCut();
@@ -329,7 +355,6 @@ public class Controller implements IMessageHandler {
                         for (int i = 0; i < indexItem.length; i++) {
                             indexItem[i] = _msg.reader().readByte();
                         }
-//                    CombineService.gI().showInfoCombine(player, indexItem);
                         CombineServiceNew.gI().showInfoCombine(player, indexItem);
                     }
                     break;
@@ -670,7 +695,7 @@ public class Controller implements IMessageHandler {
                 String name = msg.reader().readUTF();
                 int gender = msg.reader().readByte();
                 int hair = msg.reader().readByte();
-                if (name.length() <= 10) {
+                if (name.length() <= 20) {
                     rs = GirlkunDB.executeQuery("select * from player where name = ?", name);
                     if (rs.first()) {
                         Service.getInstance().sendThongBaoOK(session, "Tên nhân vật đã tồn tại");
@@ -692,7 +717,7 @@ public class Controller implements IMessageHandler {
                         }
                     }
                 } else {
-                    Service.getInstance().sendThongBaoOK(session, "Tên nhân vật tối đa 10 ký tự");
+                    Service.getInstance().sendThongBaoOK(session, "Tên nhân vật tối đa 20 ký tự");
                 }
             } catch (Exception e) {
                 Logger.logException(Controller.class, e);

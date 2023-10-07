@@ -552,6 +552,9 @@ public class SkillService {
                 if (player.mobMe != null) {
                     player.mobMe.attack(plTarget, mobTarget);
                 }
+                if (player.isPl()) {
+                    player.achievement.plusCount(3);
+                }
                 affterUseSkill(player, player.playerSkill.skillSelect.template.id);
                 break;
             //******************************************************************
@@ -798,6 +801,9 @@ public class SkillService {
                 break;
             case Skill.TAI_TAO_NANG_LUONG:
                 EffectSkillService.gI().startCharge(player);
+                if (player.isPl()) {
+                    player.achievement.plusCount(13);
+                }
                 affterUseSkill(player, player.playerSkill.skillSelect.template.id);
                 break;
             case Skill.TU_SAT:
@@ -882,6 +888,9 @@ public class SkillService {
                     long hpHoiMe = player.nPoint.hp * percentTriThuong / 100;
                     player.nPoint.addHp(hpHoiMe);
                     PlayerService.gI().sendInfoHp(player);
+                }
+                if (player.isPl()) {
+                    player.achievement.plusCount(13);
                 }
                 affterUseSkill(player, player.playerSkill.skillSelect.template.id);
                 break;
@@ -1255,6 +1264,9 @@ public class SkillService {
         }
 
         if (p1.typePk == ConstPlayer.PK_ALL || p2.typePk == ConstPlayer.PK_ALL) {
+            return true;
+        }
+        if (p1.zone.map.mapId == 51 && p1.typePk > 0 && p2.typePk > 0) {
             return true;
         }
         if ((p1.cFlag != 0 && p2.cFlag != 0)

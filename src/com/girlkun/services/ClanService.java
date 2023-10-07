@@ -185,6 +185,7 @@ public class ClanService {
                                 Service.getInstance().sendThongBao(plReceive, plGive.name + " đã cho bạn " + peaCopy.template.name);
                                 cmg.receiveDonate++;
                                 clan.sendMessageClan(cmg);
+                                plGive.achievement.plusCount(8);
                             } else {
                                 Service.getInstance().sendThongBao(plGive, "Không tìm thấy đậu trong rương");
                             }

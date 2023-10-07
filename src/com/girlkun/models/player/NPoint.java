@@ -219,15 +219,18 @@ public class NPoint {
                             this.mpAdd += io.param * 1000;
                             break;
                         case 108:// fake
+                        case 234:
                             this.tlNeDon += io.param;
                             break;
                         case 5: //+#% sức đánh chí mạng
                             this.tlDameCrit.add(io.param);
                             break;
                         case 6: //HP+#
+                        case 235: //HP+#
                             this.hpAdd += io.param;
                             break;
                         case 7: //KI+#
+                        case 236: //KI+#
                             this.mpAdd += io.param;
                             break;
                         case 8: //Hút #% HP, KI xung quanh mỗi 5 giây
@@ -263,21 +266,27 @@ public class NPoint {
                             break;
                         case 49: //Tấn công+#%
                         case 50: //Sức đánh+#%
+                        case 78: //Sức đánh hủy diệt
+                        case 232:
                             this.tlDame.add(io.param);
                             break;
                         case 77: //HP+#%
+                        case 228:
                             this.tlHp.add(io.param);
                             break;
                         case 80: //HP+#%/30s
+                        case 230:
                             this.tlHpHoi += io.param;
                             break;
                         case 81: //MP+#%/30s
+                        case 231:
                             this.tlMpHoi += io.param;
                             break;
                         case 88: //Cộng #% exp khi đánh quái
                             this.tlTNSM.add(io.param);
                             break;
                         case 94: //Giáp #%
+                        case 233:
                             this.tlDef.add(io.param);
                             break;
                         case 95: //Biến #% tấn công thành HP
@@ -296,6 +305,7 @@ public class NPoint {
                             this.tlTNSM.add(io.param);
                             break;
                         case 103: //KI +#%
+                        case 229:
                             this.tlMp.add(io.param);
                             break;
                         case 104: //Biến #% tấn công quái thành HP
@@ -398,24 +408,31 @@ public class NPoint {
                                 this.critAdd += io.param;
                                 break;
                             case 50: //Sức đánh+#%
+                            case 232:
                                 this.tlDame.add(io.param);
                                 break;
                             case 77: //HP+#%
+                            case 228:
                                 this.tlHp.add(io.param);
                                 break;
                             case 80: //HP+#%/30s
+                            case 230:
                                 this.tlHpHoi += io.param;
                                 break;
                             case 81: //MP+#%/30s
+                            case 231:
                                 this.tlMpHoi += io.param;
                                 break;
                             case 94: //Giáp #%
+                            case 233:
                                 this.tlDef.add(io.param);
                                 break;
                             case 103: //KI +#%
+                            case 229:
                                 this.tlMp.add(io.param);
                                 break;
                             case 108: //#% Né đòn
+                            case 234:
                                 this.tlNeDon += io.param;
                                 
                         }
@@ -432,24 +449,31 @@ public class NPoint {
                                 this.critAdd += io.param;
                                 break;
                             case 50: //Sức đánh+#%
+                            case 232:
                                 this.tlDame.add(io.param);
                                 break;
                             case 77: //HP+#%
+                            case 228:
                                 this.tlHp.add(io.param);
                                 break;
                             case 80: //HP+#%/30s
+                            case 230:
                                 this.tlHpHoi += io.param;
                                 break;
                             case 81: //MP+#%/30s
+                            case 231:
                                 this.tlMpHoi += io.param;
                                 break;
                             case 94: //Giáp #%
+                            case 233:
                                 this.tlDef.add(io.param);
                                 break;
                             case 103: //KI +#%
+                            case 229:
                                 this.tlMp.add(io.param);
                                 break;
                             case 108: //#% Né đòn
+                            case 234:
                                 this.tlNeDon += io.param; 
                         }
                     }
@@ -478,9 +502,11 @@ public class NPoint {
                             this.tlDameCrit.add(io.param);
                             break;
                         case 6: //HP+#
+                        case 235: //HP+#
                             this.hpAdd += io.param;
                             break;
                         case 7: //KI+#
+                        case 236: //KI+#
                             this.mpAdd += io.param;
                             break;
                         case 8: //Hút #% HP, KI xung quanh mỗi 5 giây
@@ -516,21 +542,27 @@ public class NPoint {
                             break;
                         case 49: //Tấn công+#%
                         case 50: //Sức đánh+#%
+                        case 78: //Sức đánh hủy diệt
+                        case 232:
                             this.tlDame.add(io.param);
                             break;
                         case 77: //HP+#%
+                        case 228:
                             this.tlHp.add(io.param);
                             break;
                         case 80: //HP+#%/30s
+                        case 230:
                             this.tlHpHoi += io.param;
                             break;
                         case 81: //MP+#%/30s
+                        case 231:
                             this.tlMpHoi += io.param;
                             break;
                         case 88: //Cộng #% exp khi đánh quái
                             this.tlTNSM.add(io.param);
                             break;
                         case 94: //Giáp #%
+                        case 233:
                             this.tlDef.add(io.param);
                             break;
                         case 95: //Biến #% tấn công thành HP
@@ -549,6 +581,7 @@ public class NPoint {
                             this.tlTNSM.add(io.param);
                             break;
                         case 103: //KI +#%
+                        case 229:
                             this.tlMp.add(io.param);
                             break;
                         case 104: //Biến #% tấn công quái thành HP
@@ -557,11 +590,14 @@ public class NPoint {
                         case 147: //+#% sức đánh
                             this.tlDame.add(io.param);
                             break;
-                        case 213: //HP+#%
+                        case 218: //HP+#%
                                 this.tlHp.add(io.param);
                                 this.tlMp.add(io.param);
                                 this.tlDame.add(io.param);
                                 break;
+                        case 108: //#% Né đòn
+                            case 234:
+                                this.tlNeDon += io.param; 
                     }
                 }
             }

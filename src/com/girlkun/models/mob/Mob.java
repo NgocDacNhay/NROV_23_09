@@ -451,42 +451,7 @@ public class Mob {
         if (player.itemTime.isUseMayDo && Util.isTrue(8, 100) && this.tempId > 57 && this.tempId < 66) {
             list.add(new ItemMap(zone, 380, 1, x, player.location.y, player.id));
         }// vat phẩm rơi khi user maaáy dò adu hoa r o day ti code choa
-//        if (player.itemTime.isUseMayDo2) {
-//            list.add(new ItemMap(zone, 570, 1, x, player.location.y, player.id));// cai nay sua sau nha
-//
-//        }
-//        if (Util.isTrue(10, 100) && this.tempId > 38 && this.tempId < 42) {
-//            list.add(new ItemMap(zone, 698, 1, x, player.location.y, player.id));
-//        }
-//        if (Util.isTrue(10, 100) && this.tempId > 43 && this.tempId < 54) {
-//            list.add(new ItemMap(zone, 695, 1, x, player.location.y, player.id));
-//        }
-//        if (Util.isTrue(10, 100) && this.tempId > 53 && this.tempId < 58) {
-//            list.add(new ItemMap(zone, 696, 1, x, player.location.y, player.id));
-//        }
-//        if (Util.isTrue(2, 100) && this.tempId > 64 && this.tempId < 66) {
-//            list.add(new ItemMap(zone, Manager.itemSkien[randomVp], 1, this.location.x, this.location.y, player.id));
-//        }
-//        if (Util.isTrue(0.002f, 100) && this.tempId > 76 && this.tempId < 78) {
-//            list.add(new ItemMap(zone, Manager.itemManh[randomVp], 1, this.location.x, this.location.y, player.id));
-//        }
-//        if (Util.isTrue(0.5f, 100) && this.tempId > 57 && this.tempId < 59) {
-//            list.add(new ItemMap(zone, 720, 1, this.location.x, this.location.y, player.id));
-//        }
-//        if (Util.isTrue(0.003f, 100) && this.tempId > 65 && this.tempId < 69) {
-//            Service.getInstance().dropItemMap(this.zone, Util.ratiItem1(zone, Manager.itemIds_TL[randomDo], 1, this.location.x, this.location.y, player.id));
-//        }
-//        if (Util.isTrue(60, 100) && this.tempId > 76 && this.tempId < 78) {
-//            byte random = 1;
-//            if (Util.isTrue(5, 100)) {
-//                random = 2;
-//            }
-//            Item i = Manager.RUBY_REWARDS.get(Util.nextInt(0, Manager.RUBY_REWARDS.size() - 1));
-//            i.quantity = random;
-//            InventoryServiceNew.gI().addItemBag(player, i);
-//            InventoryServiceNew.gI().sendItemBags(player);
-//            Service.getInstance().sendThongBao(player, "Bạn vừa nhận được " + random + " hồng ngọc");
-//        }
+
         
         Item item = player.inventory.itemsBody.get(1); // Sự kiện quần bơi
         if (this.zone.map.mapId > 0){
@@ -858,18 +823,7 @@ public class Mob {
             }
         }
         
-//        if (this.zone.map.mapId >= 0){
-//            if (player.setClothes.setDHD == 5){
-//                if (Util.isTrue(100, 100)) {
-//                    list.add(new ItemMap(zone, 861, Util.nextInt(1000,10000), x, player.location.y, player.id));                               
-//                            }
-//                        }
-//                    }       //this.zone.map.mapId >= 105 && this.zone.map.mapId <= 110
-            
-//    }
-//        if (!player.isPet && player.getSession().actived && Util.isTrue(15, 100)) {
-//            list.add(new ItemMap(zone, 610, 1, x, player.location.y, player.id));
-//        }
+
 
         if(this.zone.map.mapId >= 105 && this.zone.map.mapId <= 110){
             if(player.setClothes.setTL == 5){

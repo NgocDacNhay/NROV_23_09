@@ -82,10 +82,10 @@ public class PVPService {
             Service.getInstance().sendThongBao(pl, "Đối thủ đã rời khỏi map");
             return;
         }
-        if (!plMap.getSession().actived) {
-            Service.getInstance().sendThongBao(pl, "Đối thủ chưa là thành viên của NRO");
-            return;
-        }
+    //    if (!plMap.getSession().actived) {
+    //        Service.getInstance().sendThongBao(pl, "Đối thủ chưa là thành viên của NRO");
+    //        return;
+    //    }
         int goldThachDau = GOLD_CHALLENGE[selectGold];
         if (pl.inventory.gold < goldThachDau) {
             Service.getInstance().sendThongBao(pl, "Bạn chỉ có " + pl.inventory.gold + " vàng, không đủ tiền cược");

@@ -34,7 +34,12 @@ public class ItemService {
         return paramGoc;
     }
 
-
+    public int buffParamThienSu(int paramGoc){
+        int dameThem = paramGoc/100;
+            paramGoc = paramGoc + Util.nextInt(30, 50)*dameThem;
+        
+        return paramGoc;
+    }
 
     public short getItemIdByIcon(short IconID) {
         for (int i = 0; i < Manager.ITEM_TEMPLATES.size(); i++) {
@@ -1016,69 +1021,54 @@ public class ItemService {
 
 
     public Item randomCS_DHD(int itemId, int gender) {
-        Item it = createItemSetKichHoat(itemId, 1);
+        Item it = createItemOpen(itemId, 1);
         List<Integer> ao = Arrays.asList(650, 652, 654);
         List<Integer> quan = Arrays.asList(651, 653, 655);
         List<Integer> gang = Arrays.asList(657, 659, 661);
         List<Integer> giay = Arrays.asList(658, 660, 662);
         int nhd = 656;
-    //    if (ao.contains(itemId)) {
-    //        it.itemOptions.add(new Item.ItemOption(47, Util.highlightsItem(gender == 2, new Random().nextInt(1001) + 1800))); // áo từ 1800-2800 giáp
-    //    }
-    //    if (quan.contains(itemId)) {
-    //        it.itemOptions.add(new Item.ItemOption(22, Util.highlightsItem(gender == 0, new Random().nextInt(16) + 85))); // hp 85-100k
-    //    }
-    //    if (gang.contains(itemId)) {
-    //        it.itemOptions.add(new Item.ItemOption(0, Util.highlightsItem(gender == 2, new Random().nextInt(1500) + 8500))); // 8500-10000
-    //    }
-    //    if (giay.contains(itemId)) {
-    //        it.itemOptions.add(new Item.ItemOption(23, Util.highlightsItem(gender == 1, new Random().nextInt(11) + 80))); // ki 80-90k
-    //    }
-    //    if (nhd == itemId) {
-    //        it.itemOptions.add(new Item.ItemOption(14, new Random().nextInt(3) + 17)); //chí mạng 17-19%
-    //    }
         // trai dat
         if(itemId == 650){
             it.itemOptions.add(new Item.ItemOption(47, buffParamThanLinh(1600))); // áo
         }
         if(itemId == 651){
-            it.itemOptions.add(new Item.ItemOption(22, buffParamThanLinh(104000))); // hp
+            it.itemOptions.add(new Item.ItemOption(235, buffParamThanLinh(104000))); // hp
         }
         if(itemId == 657){
             it.itemOptions.add(new Item.ItemOption(0, buffParamThanLinh(8800))); // dame
         }
         if(itemId == 658){
-           it.itemOptions.add(new Item.ItemOption(23, buffParamThanLinh(96000))); // ki
+           it.itemOptions.add(new Item.ItemOption(236, buffParamThanLinh(96000))); // ki
         }
         // namec
         if(itemId == 652){
             it.itemOptions.add(new Item.ItemOption(47, buffParamThanLinh(1700))); // áo
         }
         if(itemId == 653){
-            it.itemOptions.add(new Item.ItemOption(22, buffParamThanLinh(100000))); // hp
+            it.itemOptions.add(new Item.ItemOption(235, buffParamThanLinh(100000))); // hp
         }
         if(itemId == 659){
             it.itemOptions.add(new Item.ItemOption(0, buffParamThanLinh(8600))); // dame
         }
         if(itemId == 650){
-           it.itemOptions.add(new Item.ItemOption(23, buffParamThanLinh(100000))); // ki
+           it.itemOptions.add(new Item.ItemOption(236, buffParamThanLinh(100000))); // ki
         }
         // xayda
         if(itemId == 654){
             it.itemOptions.add(new Item.ItemOption(47, buffParamThanLinh(1800))); // áo
         }
         if(itemId == 655){
-            it.itemOptions.add(new Item.ItemOption(22, buffParamThanLinh(96000))); // hp
+            it.itemOptions.add(new Item.ItemOption(235, buffParamThanLinh(96000))); // hp
         }
         if(itemId == 651){
             it.itemOptions.add(new Item.ItemOption(0, buffParamThanLinh(9000))); // dame
         }
         if(itemId == 652){
-           it.itemOptions.add(new Item.ItemOption(23, buffParamThanLinh(92000))); // ki
+           it.itemOptions.add(new Item.ItemOption(236, buffParamThanLinh(92000))); // ki
         }
 
         if(itemId == 656){
-           it.itemOptions.add(new Item.ItemOption(14, new Random().nextInt(3) + 17)); //chí mạng 17-19%
+           it.itemOptions.add(new Item.ItemOption(14, new Random().nextInt(3) + 16)); //chí mạng 17-19%
         }
         it.itemOptions.add(new Item.ItemOption(21, 80));// yêu cầu sm 80 tỉ
         it.itemOptions.add(new Item.ItemOption(30, 1));// ko the gd
@@ -1321,6 +1311,8 @@ public class ItemService {
             short[][] itemIds = {{1048, 1051, 1054, 1057, 1060}, {1049, 1052, 1055, 1058, 1061}, {1050, 1053, 1056, 1059, 1062}}; // thứ tự td - 0,nm - 1, xd - 2
 
             Item itemTS = DoThienSu(itemIds[player.gender][itemTL.template.type], player.gender);
+            itemTS.itemOptions.add(new ItemOption(30, 1));
+            itemTS.itemOptions.add(new ItemOption(21, 120));
             InventoryServiceNew.gI().addItemBag(player, itemTS);
 
             InventoryServiceNew.gI().subQuantityItemsBag(player, itemTL, 1);
@@ -1334,92 +1326,51 @@ public class ItemService {
     }
 
     public Item DoThienSu(int itemId, int gender) {
-        Item dots = createItemSetKichHoat(itemId, 1);
+        Item dots = createItemOpen(itemId, 1);
         List<Integer> ao = Arrays.asList(1048, 1049, 1050);
         List<Integer> quan = Arrays.asList(1051, 1052, 1053);
         List<Integer> gang = Arrays.asList(1054, 1055, 1056);
         List<Integer> giay = Arrays.asList(1057, 1058, 1059);
         List<Integer> nhan = Arrays.asList(1060, 1061, 1062);
-        //áo
-        if (ao.contains(itemId)) {
-            if (dots.template.id == 1048){
-            dots.itemOptions.add(new Item.ItemOption(47, Util.nextInt(1440, 1730))); // Áo TĐ
-        }}
-        if (ao.contains(itemId)) {
-            if (dots.template.id == 1049){
-            dots.itemOptions.add(new Item.ItemOption(47, Util.nextInt(1155, 1585))); // Áo Namec
-        }}
-        if (ao.contains(itemId)) {
-            if (dots.template.id == 1050){
-            dots.itemOptions.add(new Item.ItemOption(47, Util.nextInt(1730, 2020))); // Áo Xayda
-        }}
-        //quần
-        if (quan.contains(itemId)) {
-            if (dots.template.id == 1051){
-            dots.itemOptions.add(new Item.ItemOption(22, Util.nextInt(158, 187))); // Quần TĐ
-        }}
-        if (quan.contains(itemId)) {
-            if (dots.template.id == 1052){
-            dots.itemOptions.add(new Item.ItemOption(22, Util.nextInt(144, 173))); // Quần Namec
-        }}
-        if (quan.contains(itemId)) {
-            if (dots.template.id == 1053){
-            dots.itemOptions.add(new Item.ItemOption(22, Util.nextInt(130, 158))); // Quần Xayda
-        }}
-//        if (Util.isTrue(5, 100)) {
-//            if (quan.contains(itemId)) {
-//                dots.itemOptions.add(new Item.ItemOption(22, Util.highlightsItem(gender == 0, new Random().nextInt(11) + 120))); // hp 120k-130k
-//            }
-//        } else {
-//            if (quan.contains(itemId)) {
-//                dots.itemOptions.add(new Item.ItemOption(22, Util.highlightsItem(gender == 0, new Random().nextInt(51) + 130))); // hp 130-180k 15%
-//            }
-//        }
-        //găng
-        if (gang.contains(itemId)) {
-            if (dots.template.id == 1054){
-            dots.itemOptions.add(new Item.ItemOption(0, Util.nextInt(17280, 20160))); // Găng TĐ
-        }}
-        if (gang.contains(itemId)) {
-            if (dots.template.id == 1055){
-            dots.itemOptions.add(new Item.ItemOption(0, Util.nextInt(15840, 18720))); // Găng Namec
-        }}
-        if (gang.contains(itemId)) {
-            if (dots.template.id == 1056){
-            dots.itemOptions.add(new Item.ItemOption(0, Util.nextInt(18720, 21600))); // Găng Xayda
-        }}
-//        if (Util.isTrue(5, 100)) {
-//            if (gang.contains(itemId)) {
-//                dots.itemOptions.add(new Item.ItemOption(0, Util.highlightsItem(gender == 2, new Random().nextInt(7651) + 11000))); // 11000-18600
-//            }
-//        } else {
-//            if (gang.contains(itemId)) {
-//                dots.itemOptions.add(new Item.ItemOption(0, Util.highlightsItem(gender == 2, new Random().nextInt(7001) + 12000))); // gang 15% 12-19k -xayda 12k1
-//            }
-//        }
-        //giày
-        if (giay.contains(itemId)) {
-            if (dots.template.id == 1057){
-            dots.itemOptions.add(new Item.ItemOption(23, Util.nextInt(144, 173))); // Giày TĐ
-        }}
-        if (giay.contains(itemId)) {
-            if (dots.template.id == 1058){
-            dots.itemOptions.add(new Item.ItemOption(23, Util.nextInt(187, 216))); // Giày Namec
-        }}
-        if (giay.contains(itemId)) {
-            if (dots.template.id == 1059){
-            dots.itemOptions.add(new Item.ItemOption(23, Util.nextInt(158, 188))); // Giày Xayda
-        }}
-//        if (Util.isTrue(80, 100)) {
-//            if (giay.contains(itemId)) {
-//                dots.itemOptions.add(new Item.ItemOption(23, Util.highlightsItem(gender == 1, new Random().nextInt(21) + 120))); // ki 90-110k
-//            }
-//        } else {
-//            if (giay.contains(itemId)) {
-//                dots.itemOptions.add(new Item.ItemOption(23, Util.highlightsItem(gender == 1, new Random().nextInt(21) + 130))); // ki 110-130k
-//            }
-//        }
-
+        // trai dat
+        if(itemId == 1048){
+            dots.itemOptions.add(new Item.ItemOption(47, buffParamThienSu(1600))); // áo
+        }
+        if(itemId == 1051){
+            dots.itemOptions.add(new Item.ItemOption(235, buffParamThienSu(104000))); // hp
+        }
+        if(itemId == 1054){
+            dots.itemOptions.add(new Item.ItemOption(0, buffParamThienSu(8800))); // dame
+        }
+        if(itemId == 1057){
+           dots.itemOptions.add(new Item.ItemOption(236, buffParamThienSu(96000))); // ki
+        }
+        // namec
+        if(itemId == 1049){
+            dots.itemOptions.add(new Item.ItemOption(47, buffParamThienSu(1700))); // áo
+        }
+        if(itemId == 1052){
+            dots.itemOptions.add(new Item.ItemOption(235, buffParamThienSu(100000))); // hp
+        }
+        if(itemId == 1055){
+            dots.itemOptions.add(new Item.ItemOption(0, buffParamThienSu(8600))); // dame
+        }
+        if(itemId == 1058){
+           dots.itemOptions.add(new Item.ItemOption(236, buffParamThienSu(100000))); // ki
+        }
+        // xayda
+        if(itemId == 1050){
+            dots.itemOptions.add(new Item.ItemOption(47, buffParamThienSu(1800))); // áo
+        }
+        if(itemId == 1053){
+            dots.itemOptions.add(new Item.ItemOption(235, buffParamThienSu(96000))); // hp
+        }
+        if(itemId == 1056){
+            dots.itemOptions.add(new Item.ItemOption(0, buffParamThienSu(9000))); // dame
+        }
+        if(itemId == 1059){
+           dots.itemOptions.add(new Item.ItemOption(236, buffParamThienSu(92000))); // ki
+        }    
         // Nhẫn
         if (nhan.contains(itemId)) {
             if (dots.template.id == 1060){
@@ -1433,11 +1384,8 @@ public class ItemService {
             if (dots.template.id == 1062){
             dots.itemOptions.add(new Item.ItemOption(14, Util.nextInt(22, 27))); // Nhẫn Xayda
         }}
-//        if (nhan.contains(itemId)) {
-//            dots.itemOptions.add(new Item.ItemOption(14, Util.highlightsItem(gender == 1, new Random().nextInt(3) + 18))); // nhẫn 18-20%
-//        }
-        dots.itemOptions.add(new Item.ItemOption(21, 120));
-//        dots.itemOptions.add(new Item.ItemOption(30, 1));
+
+    //    dots.itemOptions.add(new Item.ItemOption(21, 120));
         return dots;
     }
 

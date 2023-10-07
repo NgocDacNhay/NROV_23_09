@@ -108,7 +108,7 @@ public class Manager {
     public static final String queryTopNHS = "SELECT id, CAST( NguHanhSonPoint AS UNSIGNED) AS NguHanhSonPoint FROM player ORDER BY CAST( NguHanhSonPoint AS UNSIGNED) DESC LIMIT 20;";
     public static final String queryTopKhiGas = "SELECT id, CAST( khi_gas AS UNSIGNED) AS khi_gas FROM player ORDER BY CAST( khi_gas AS UNSIGNED) DESC LIMIT 50;";
     
-
+    public static final List<AchievementTemplate> ACHIEVEMENTS = new ArrayList<>();
     public static List<TOP> topSM;
     public static List<TOP> topSD;
     public static List<TOP> topHP;
@@ -549,6 +549,20 @@ public class Manager {
             }
             Logger.success("Load side task thành công (" + SIDE_TASKS_TEMPLATE.size() + ")\n");
 
+            // load nhiem vu bo mong
+            ps = con.prepareStatement("SELECT * FROM achievement");
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                AchievementTemplate achi = new AchievementTemplate(
+                        rs.getInt("id"),
+                        rs.getString("info1"),
+                        rs.getString("info2"),
+                        rs.getInt("count_purpose"),
+                        rs.getInt("gem"));
+                ACHIEVEMENTS.add(achi);
+            }
+            Logger.success("Load achievement done (" + ACHIEVEMENTS.size() + ")");
+
             //load item template
             ps = con.prepareStatement("select * from item_template");
             rs = ps.executeQuery();
@@ -890,7 +904,7 @@ public class Manager {
                     for (int i1 = 0; i1 < arr.size(); i1++) {
                         JSONObject ob = (JSONObject) arr.get(i1);
                         if (ob != null) {
-                            rd.Options.add(new OptionCard(Integer.parseInt(ob.get("id").toString()), Short.parseShort(ob.get("param").toString()), Byte.parseByte(ob.get("activeCard").toString())));
+                            rd.Options.add(new OptionCard(Integer.parseInt(ob.get("id").toString()), Integer.parseInt(ob.get("param").toString()), Byte.parseByte(ob.get("activeCard").toString())));
                         }
                     }
                     rd.Require = rs.getShort("require");

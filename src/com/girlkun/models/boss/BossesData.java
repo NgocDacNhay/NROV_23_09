@@ -44,7 +44,7 @@ public class BossesData {
             ConstPlayer.XAYDA, //gender
             new short[]{159, 160, 161, -1, -1, -1}, //outfit {head, body, leg, bag, aura, eff}
             9000, //dame
-            new long[]{10000000}, //hp
+            new long[]{10000000000L}, //hp
             new int[]{29}, //map join
             new int[][]{
                 {Skill.MASENKO, 3, 1000},
